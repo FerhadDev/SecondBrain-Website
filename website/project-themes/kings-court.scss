@@ -1,0 +1,684 @@
+﻿body:has(.kings-court-shell) {
+  background: #17111d;
+}
+.kings-court-shell {
+  background: #211923;
+  color: #efe2c5;
+  --court-gold: #c5a264;
+  --court-cream: #f0dfb6;
+  --court-red: #91383e;
+  .portfolio-nav {
+    border-color: #c5a26433;
+  }
+  .portfolio-nav a,
+  .wordmark,
+  .wordmark small {
+    color: #e5d6bc;
+  }
+  .wordmark span {
+    color: #c5a264;
+  }
+  .portfolio-footer {
+    border-color: #c5a26433;
+    color: #b6a58d;
+  }
+  .portfolio-footer a {
+    color: #d7c5a8;
+  }
+  a:focus-visible,
+  summary:focus-visible,
+  video:focus-visible {
+    outline: 2px solid #d6ac62;
+    outline-offset: 5px;
+  }
+}
+.kings-court {
+  font:
+    15px/1.8 "Segoe UI",
+    Arial,
+    sans-serif;
+  h1,
+  h2,
+  h3 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 400;
+    letter-spacing: -0.035em;
+    color: inherit;
+    line-height: 1.1;
+  }
+  h2 {
+    font-size: clamp(34px, 4.5vw, 58px);
+    margin: 16px 0 24px;
+  }
+  h2 em {
+    color: #c7a371;
+    font-weight: 400;
+  }
+  h3 {
+    font-size: 27px;
+    margin: 0 0 12px;
+  }
+  p {
+    color: inherit;
+    margin: 0 0 20px;
+  }
+  a {
+    color: inherit;
+    background: none;
+    text-decoration: none;
+  }
+  figure {
+    margin: 0;
+  }
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    content-visibility: visible;
+    border-radius: 0;
+    margin: 0;
+  }
+  section[id] {
+    scroll-margin-top: 24px;
+  }
+  .court-eyebrow {
+    font:
+      600 10px/1.8 "Segoe UI",
+      Arial,
+      sans-serif;
+    letter-spacing: 0.18em;
+    color: #c5a264;
+    margin: 0 0 22px;
+    > span {
+      color: #8c7764;
+      margin-right: 18px;
+    }
+  }
+}
+.court-topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 28px 0;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: #b9a68a;
+  > span {
+    letter-spacing: 0.13em;
+    span {
+      margin-left: 18px;
+      color: #c5a264;
+    }
+  }
+}
+.court-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: 0.82fr 1.18fr;
+  align-items: center;
+  gap: 44px;
+  padding: 56px 0 64px;
+  isolation: isolate;
+}
+.kings-court .court-hero-backdrop {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.13;
+  z-index: -2;
+}
+.court-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, #211923 0%, #211923eb 28%, #21192366 75%, #211923aa),
+    linear-gradient(0deg, #211923, transparent 30%);
+}
+.kings-court h1 {
+  font-size: clamp(48px, 6.5vw, 90px);
+  max-width: 8ch;
+  margin: 20px 0 24px;
+  color: #f1dfb5;
+  text-wrap: balance;
+}
+.kings-court .court-hero-subtitle {
+  font:
+    22px/1.5 Georgia,
+    serif;
+  color: #e6d5b3;
+  em {
+    color: #b99c77;
+  }
+}
+.kings-court .court-hero-description {
+  color: #c1b1a1;
+  font-size: 13px;
+  max-width: 380px;
+}
+.court-hero-art {
+  padding: 10px;
+  border: 1px solid #a37c4d;
+  outline: 1px solid #9b784733;
+  outline-offset: 7px;
+  box-shadow:
+    0 28px 60px #0007,
+    0 0 60px #cb8f3414;
+  background: #17111d;
+  figcaption {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 14px 3px 3px;
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    color: #b99f79;
+  }
+}
+.court-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+  span {
+    border: 1px solid #b493653f;
+    padding: 3px 10px;
+    font-size: 10px;
+    color: #ddc8a5;
+  }
+}
+.court-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+  margin-top: 30px;
+  > a:not(.court-play) {
+    font-size: 11px;
+    border-bottom: 1px solid #ac8b6255;
+    padding-bottom: 4px;
+  }
+}
+.kings-court .court-play {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 35px;
+  background: #85363c;
+  border: 1px solid #c39467;
+  color: #f4e4c7;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 13px 22px;
+  box-shadow:
+    inset 0 0 0 3px #85363c,
+    inset 0 0 0 4px #c3946755;
+  transition:
+    background-color 0.2s,
+    box-shadow 0.2s;
+  &:hover {
+    background: #a04547;
+    box-shadow: 0 0 22px #aa643a33;
+  }
+}
+.court-chapters {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-block: 22px;
+  border-block: 1px solid #a37c4d55;
+  a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 10px;
+    color: #d4c09d;
+  }
+  span {
+    color: #88705f;
+    font-size: 9px;
+  }
+}
+.court-act {
+  position: relative;
+  isolation: isolate;
+  padding-top: 1px;
+  > * {
+    position: relative;
+  }
+}
+.court-act-warm {
+  background: radial-gradient(ellipse at 0% 25%, #9b642519, transparent 60%);
+}
+.court-act-shadow {
+  background: linear-gradient(#211923, #211323 75%);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0 -20px;
+    z-index: -1;
+    background: radial-gradient(ellipse at 85% 45%, #6c1f3044, transparent 60%);
+    pointer-events: none;
+  }
+}
+.court-act-dark {
+  background: linear-gradient(#211323, #170f1b);
+}
+.court-section {
+  margin-top: 90px;
+}
+.court-parchment {
+  background: radial-gradient(ellipse at 100% 0%, #b5894655, transparent 65%), #e9d7af;
+  color: #403129;
+  border: 1px solid #b4976a;
+  box-shadow:
+    inset 0 0 0 7px #e9d7af,
+    inset 0 0 0 8px #8f6d3a55,
+    0 20px 40px #0003;
+}
+.court-overview {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 60px;
+  align-items: center;
+  padding: 48px;
+  margin-top: 64px;
+  .court-eyebrow {
+    color: #80613c;
+  }
+  h2 em {
+    color: #854039;
+  }
+  > div > p:not(.court-eyebrow) {
+    font:
+      20px/1.65 Georgia,
+      serif;
+  }
+  blockquote {
+    font:
+      italic 16px/1.7 Georgia,
+      serif;
+    border-left: 2px solid #9a7651;
+    margin: 24px 0 0;
+    padding: 2px 0 2px 20px;
+    color: #694f3a;
+  }
+}
+.court-section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 30px;
+  margin-bottom: 32px;
+  h2 {
+    margin-bottom: 0;
+  }
+  > p {
+    color: #b6a597;
+    font-size: 12px;
+    margin: 0;
+  }
+}
+.court-choices-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 40px;
+  align-items: center;
+}
+.court-frame {
+  padding: 10px;
+  background: #17111d;
+  border: 1px solid #8f7050;
+  figcaption {
+    font:
+      italic 12px Georgia,
+      serif;
+    color: #b8a385;
+    padding: 15px 4px 5px;
+  }
+}
+.court-decision-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  > li {
+    display: flex;
+    gap: 20px;
+    border-bottom: 1px solid #ad8c6433;
+    padding: 20px 0;
+    > span {
+      color: #bd9462;
+      font:
+        italic 18px Georgia,
+        serif;
+    }
+    h3 {
+      font-size: 22px;
+    }
+    p {
+      margin: 0;
+      font-size: 12px;
+      color: #b9a99b;
+    }
+  }
+}
+.court-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+.court-gallery-item {
+  border: 1px solid #98764c66;
+  background: #150e1b;
+  padding: 10px;
+  margin: 0;
+  summary {
+    display: block;
+    list-style: none;
+    cursor: zoom-in;
+    &::-webkit-details-marker {
+      display: none;
+    }
+    > span {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 14px;
+      padding: 14px 4px 5px;
+      font-size: 11px;
+      color: #d4c1a2;
+      > span {
+        color: #a58a6a;
+        font-size: 9px;
+        white-space: nowrap;
+      }
+    }
+  }
+  > a {
+    display: block;
+    margin-top: 20px;
+    padding-top: 12px;
+    border-top: 1px solid #98764c44;
+    font-size: 11px;
+    color: #d4c1a2;
+  }
+  &[open] {
+    grid-column: 1/-1;
+    summary {
+      cursor: zoom-out;
+    }
+    summary img {
+      max-height: 220px;
+    }
+  }
+}
+.kings-court .court-caption-note {
+  font-size: 11px;
+  line-height: 1.8;
+  color: #ac998b;
+  margin-top: 20px;
+}
+.court-contributions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid #9e795144;
+  > article {
+    padding: 30px 24px 28px 0;
+    border-bottom: 1px solid #9e795144;
+    &:not(:nth-child(3n + 1)) {
+      padding-left: 24px;
+      border-left: 1px solid #9e795133;
+    }
+    h3 {
+      margin-top: 24px;
+      font-size: 28px;
+    }
+    p {
+      font-size: 13px;
+      color: #c2aea0;
+      margin-bottom: 0;
+    }
+  }
+}
+.court-work-number {
+  font:
+    italic 23px Georgia,
+    serif;
+  color: #b7875c;
+}
+.court-record {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+  padding: 44px 0;
+  border-block: 1px solid #9e795144;
+  h2 {
+    font-size: clamp(32px, 4vw, 50px);
+  }
+  dl {
+    margin: 0;
+    > div {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 11px 0;
+      border-bottom: 1px solid #9e795133;
+    }
+    dt {
+      font-size: 11px;
+      color: #ac998b;
+      flex-shrink: 0;
+    }
+    dd {
+      margin: 0;
+      font:
+        15px/1.6 Georgia,
+        serif;
+      text-align: right;
+      color: #e0c7a5;
+    }
+  }
+}
+.court-result {
+  display: inline-block;
+  font-size: 12px;
+  color: #dfbf87;
+  border-left: 2px solid #a47b4b;
+  padding-left: 14px;
+}
+.court-team {
+  margin-top: 40px;
+  h2 {
+    font:
+      24px Georgia,
+      serif;
+  }
+  ul {
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+    font-size: 12px;
+    color: #b8a494;
+  }
+}
+.court-ending {
+  text-align: center;
+  padding: 80px 20px 70px;
+  h2 {
+    font-size: clamp(34px, 4.5vw, 60px);
+  }
+  > p:not(.court-eyebrow) {
+    font-size: 13px;
+    color: #ab9588;
+    max-width: 430px;
+    margin: 24px auto 30px;
+  }
+  .court-eyebrow {
+    margin-top: 24px;
+  }
+}
+.court-ending-mark {
+  color: #b17b51;
+  font-size: 28px;
+}
+.court-return {
+  display: block;
+  font-size: 11px;
+  margin-top: 26px;
+  color: #bea17e;
+}
+.court-videos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
+  gap: 24px;
+  margin-top: 24px;
+  video {
+    display: block;
+    width: 100%;
+    max-height: 600px;
+  }
+  figcaption {
+    font-size: 11px;
+    color: #b9a183;
+    padding-top: 10px;
+  }
+}
+.court-media-pending {
+  padding: 36px;
+  font-size: 13px;
+  border: 1px dashed #98764c66;
+  color: #bba586;
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .court-act-shadow::before {
+      animation: court-deepening 1s linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 65%;
+    }
+  }
+}
+@keyframes court-deepening {
+  from {
+    opacity: 0.15;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (max-width: 1000px) {
+  .court-hero {
+    gap: 30px;
+  }
+  .court-overview {
+    padding: 36px;
+    gap: 36px;
+  }
+  .court-choices-layout {
+    grid-template-columns: 1fr;
+  }
+  .court-decision-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 30px;
+  }
+  .court-record {
+    gap: 40px;
+  }
+}
+@media (max-width: 700px) {
+  .kings-court-shell .portfolio-nav nav {
+    flex: 0 0 100%;
+    order: 3;
+    justify-content: flex-start;
+    gap: 10px 16px;
+  }
+  .court-topline > span {
+    display: none;
+  }
+  .court-hero {
+    grid-template-columns: 1fr;
+    padding-top: 24px;
+    gap: 36px;
+  }
+  .kings-court h1 {
+    font-size: 64px;
+    max-width: 9ch;
+  }
+  .court-hero-art {
+    margin: 0 7px;
+  }
+  .court-chapters {
+    flex-wrap: wrap;
+    justify-content: start;
+    gap: 16px 24px;
+  }
+  .court-overview {
+    grid-template-columns: 1fr;
+    padding: 30px;
+    gap: 10px;
+    margin-top: 44px;
+  }
+  .court-overview > div > p:not(.court-eyebrow) {
+    font-size: 18px;
+  }
+  .court-section {
+    margin-top: 60px;
+  }
+  .court-section-heading {
+    display: block;
+    > p {
+      margin-top: 20px;
+    }
+  }
+  .court-decision-list {
+    grid-template-columns: 1fr;
+  }
+  .court-gallery {
+    grid-template-columns: 1fr;
+  }
+  .court-contributions {
+    grid-template-columns: 1fr;
+    > article {
+      padding: 24px 0;
+      &:not(:nth-child(3n + 1)) {
+        padding-left: 0;
+        border-left: 0;
+      }
+    }
+  }
+  .court-record {
+    grid-template-columns: 1fr;
+    padding-top: 30px;
+    gap: 20px;
+  }
+  .court-ending {
+    padding-inline: 0;
+  }
+}
+@media (max-width: 360px) {
+  .kings-court h1 {
+    font-size: 54px;
+  }
+  .court-actions {
+    gap: 18px;
+  }
+  .court-gallery-item summary > span {
+    flex-wrap: wrap;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .kings-court *,
+  .kings-court *::before {
+    animation: none !important;
+    transition: none !important;
+  }
+}

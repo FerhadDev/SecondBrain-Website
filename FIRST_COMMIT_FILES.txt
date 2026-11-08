@@ -1,0 +1,500 @@
+FIRST COMMIT PROPOSAL - 2026-11-09
+Owner approvals confirmed; explicit verified paths staged for review. No commit or push.
+Inherited Quartz history is retained; the first portfolio commit changes only the paths below.
+M = modified, D = deleted, A = new untracked file proposed for addition.
+
+CHANGES RELATIVE TO HEAD (104 paths)
+M	.github/workflows/ci.yaml
+M	.github/workflows/dependabot-automerge.yaml
+M	.github/workflows/deploy-preview.yaml
+M	.github/workflows/deploy-v5.yaml
+M	.github/workflows/docker-build-push.yaml
+M	.gitignore
+D	content/.gitkeep
+M	package.json
+M	quartz/components/frames/index.ts
+M	quartz/styles/custom.scss
+M	tsconfig.json
+A	.github/workflows/pages.yaml
+A	AGENTS.md
+A	FIRST_COMMIT_FILES.txt
+A	GITHUB_PREPARATION.md
+A	PROJECT_STATUS.md
+A	PUBLICATION_READINESS.md
+A	content/brain/About-Me.md
+A	content/brain/Projects/Game-Jam/Are you king enough.md
+A	content/brain/Projects/Game-Jam/Attachments/Pasted image 20261108011547 1.png
+A	content/brain/Projects/Game-Jam/Attachments/Pasted image 20261108011547.png
+A	content/brain/Projects/Game-Jam/Attachments/Pasted image 20261108011550.png
+A	content/brain/Projects/Game-Jam/Attachments/Pasted image 20261108011557.png
+A	content/brain/Projects/Game-Jam/Attachments/Pasted image 20261108011600.png
+A	content/brain/Projects/Game-Jam/Attachments/Pasted image 20261108011609.png
+A	content/brain/Projects/Game-Jam/Attachments/Pasted image 20261108011613.png
+A	content/brain/Projects/Game-Jam/Attachments/Pasted image 20261108232151.png
+A	content/brain/Projects/Game-Jam/Attachments/Pasted image 20261108232155.png
+A	content/brain/Projects/Game-Jam/Attachments/Pasted image 20261108232316.png
+A	content/brain/Projects/Game-Jam/Attachments/Pasted image 20261108232345.png
+A	content/brain/Projects/Game-Jam/Attachments/Pasted image 20261108232359.png
+A	content/brain/Projects/Game-Jam/Lucid Space.md
+A	content/brain/Projects/Game-Jam/Tengri.md
+A	content/brain/Projects/Team/Attachments/Blue_Diary_Repaired_Optimized.pptx (1).mp4
+A	content/brain/Projects/Team/Attachments/Blue_Diary_Repaired_Optimized.pptx (2).mp4
+A	content/brain/Projects/Team/Attachments/Blue_Diary_Repaired_Optimized.pptx.mp4
+A	content/brain/Projects/Team/Attachments/Pasted image 20261108002831.png
+A	content/brain/Projects/Team/Attachments/Pasted image 20261108005742.png
+A	content/brain/Projects/Team/Attachments/Pasted image 20261108005805.png
+A	content/brain/Projects/Team/Blue Diary.md
+A	content/graph.md
+A	content/index.md
+A	content/project-media/posters/140977ad008fb602e1b7.jpg
+A	content/project-media/posters/20cb363d49ce401c52e3.jpg
+A	content/project-media/posters/2dfb73487e52afd3e7d4.jpg
+A	content/project-media/posters/e8cd5a50fec85eec4e99.jpg
+A	content/projects.md
+A	quartz.config.yaml
+A	quartz/static/portfolio.js
+A	quartz/static/project-media.js
+A	quartz/static/projects-gallery.js
+A	quartz/static/video-gallery.js
+A	scripts/OBSIDIAN-SYNC.md
+A	scripts/check-blue-diary-browser.mjs
+A	scripts/check-blue-diary-video-browser.mjs
+A	scripts/check-kings-court-browser.mjs
+A	scripts/check-projects-browser.mjs
+A	scripts/check-tengri-browser.mjs
+A	scripts/dev-brain.mjs
+A	scripts/lib/local-browser.mjs
+A	scripts/prepare-project-media.mjs
+A	scripts/project-schema.mjs
+A	scripts/projects-system.test.mjs
+A	scripts/sync-obsidian.mjs
+A	scripts/sync-obsidian.test.mjs
+A	scripts/test-portfolio-graph.mjs
+A	scripts/validate-brain.mjs
+A	scripts/validate-portfolio.mjs
+A	scripts/validate-projects.mjs
+A	scripts/validate-public-content.mjs
+A	scripts/validate-public-content.test.mjs
+A	scripts/video-posters.mjs
+A	website/BLUE-DIARY-MEDIA.md
+A	website/BLUE-DIARY.md
+A	website/ContributionMediaCard.tsx
+A	website/FeaturedVideoPlayer.tsx
+A	website/KINGS-COURT.md
+A	website/PROJECTS.md
+A	website/PortfolioFrame.tsx
+A	website/Project.template.md
+A	website/ProjectMedia.tsx
+A	website/ProjectsShowcase.tsx
+A	website/README.md
+A	website/featured-video.scss
+A	website/kings-court.test.ts
+A	website/project-media.json
+A	website/project-themes.test.ts
+A	website/project-themes/BlueDiary.tsx
+A	website/project-themes/CourtMedia.tsx
+A	website/project-themes/KingsCourt.tsx
+A	website/project-themes/Tengri.tsx
+A	website/project-themes/blue-diary.scss
+A	website/project-themes/content.ts
+A	website/project-themes/index.ts
+A	website/project-themes/kings-court.scss
+A	website/project-themes/media.ts
+A	website/project-themes/tengri.scss
+A	website/project-themes/video-data.ts
+A	website/project-video-posters.json
+A	website/projects.scss
+A	website/projects.test.ts
+A	website/projects.ts
+A	website/public-project-metadata.json
+A	website/video-gallery.test.ts
+
+COMPLETE PROPOSED REPOSITORY SNAPSHOT (388 files; excludes deleted content/.gitkeep)
+.gitattributes
+.github/FUNDING.yml
+.github/ISSUE_TEMPLATE/bug_report.md
+.github/ISSUE_TEMPLATE/feature_request.md
+.github/dependabot.yml
+.github/pull_request_template.md
+.github/workflows/build-preview.yaml
+.github/workflows/ci.yaml
+.github/workflows/dependabot-automerge.yaml
+.github/workflows/deploy-preview.yaml
+.github/workflows/deploy-v5.yaml
+.github/workflows/docker-build-push.yaml
+.github/workflows/pages.yaml
+.gitignore
+.node-version
+.npmrc
+.prettierignore
+.prettierrc
+AGENTS.md
+CODE_OF_CONDUCT.md
+Dockerfile
+FIRST_COMMIT_FILES.txt
+GITHUB_PREPARATION.md
+LICENSE.txt
+PROJECT_STATUS.md
+PUBLICATION_READINESS.md
+README.md
+content/brain/About-Me.md
+content/brain/Projects/Game-Jam/Are you king enough.md
+content/brain/Projects/Game-Jam/Attachments/Pasted image 20261108011547 1.png
+content/brain/Projects/Game-Jam/Attachments/Pasted image 20261108011547.png
+content/brain/Projects/Game-Jam/Attachments/Pasted image 20261108011550.png
+content/brain/Projects/Game-Jam/Attachments/Pasted image 20261108011557.png
+content/brain/Projects/Game-Jam/Attachments/Pasted image 20261108011600.png
+content/brain/Projects/Game-Jam/Attachments/Pasted image 20261108011609.png
+content/brain/Projects/Game-Jam/Attachments/Pasted image 20261108011613.png
+content/brain/Projects/Game-Jam/Attachments/Pasted image 20261108232151.png
+content/brain/Projects/Game-Jam/Attachments/Pasted image 20261108232155.png
+content/brain/Projects/Game-Jam/Attachments/Pasted image 20261108232316.png
+content/brain/Projects/Game-Jam/Attachments/Pasted image 20261108232345.png
+content/brain/Projects/Game-Jam/Attachments/Pasted image 20261108232359.png
+content/brain/Projects/Game-Jam/Lucid Space.md
+content/brain/Projects/Game-Jam/Tengri.md
+content/brain/Projects/Team/Attachments/Blue_Diary_Repaired_Optimized.pptx (1).mp4
+content/brain/Projects/Team/Attachments/Blue_Diary_Repaired_Optimized.pptx (2).mp4
+content/brain/Projects/Team/Attachments/Blue_Diary_Repaired_Optimized.pptx.mp4
+content/brain/Projects/Team/Attachments/Pasted image 20261108002831.png
+content/brain/Projects/Team/Attachments/Pasted image 20261108005742.png
+content/brain/Projects/Team/Attachments/Pasted image 20261108005805.png
+content/brain/Projects/Team/Blue Diary.md
+content/graph.md
+content/index.md
+content/project-media/posters/140977ad008fb602e1b7.jpg
+content/project-media/posters/20cb363d49ce401c52e3.jpg
+content/project-media/posters/2dfb73487e52afd3e7d4.jpg
+content/project-media/posters/e8cd5a50fec85eec4e99.jpg
+content/projects.md
+docs/Base.base
+docs/Canvas.canvas
+docs/advanced/architecture.md
+docs/advanced/creating components.md
+docs/advanced/index.md
+docs/advanced/making plugins.md
+docs/advanced/paths.md
+docs/cli/build.md
+docs/cli/create.md
+docs/cli/index.md
+docs/cli/plugin.md
+docs/cli/restore.md
+docs/cli/sync.md
+docs/cli/tui.md
+docs/cli/upgrade.md
+docs/community.md
+docs/configuration.md
+docs/features/Bases.md
+docs/features/Canvas.md
+docs/features/Citations.md
+docs/features/Docker Support.md
+docs/features/Latex.md
+docs/features/Mermaid diagrams.md
+docs/features/Obsidian compatibility.md
+docs/features/OxHugo compatibility.md
+docs/features/RSS Feed.md
+docs/features/Roam Research compatibility.md
+docs/features/SPA Routing.md
+docs/features/backlinks.md
+docs/features/breadcrumbs.md
+docs/features/callouts.md
+docs/features/comments.md
+docs/features/darkmode.md
+docs/features/explorer.md
+docs/features/folder and tag listings.md
+docs/features/full-text search.md
+docs/features/graph view.md
+docs/features/i18n.md
+docs/features/index.md
+docs/features/popover previews.md
+docs/features/private pages.md
+docs/features/reader mode.md
+docs/features/recent notes.md
+docs/features/social images.md
+docs/features/syntax highlighting.md
+docs/features/table of contents.md
+docs/features/wikilinks.md
+docs/getting-started/authoring-content.md
+docs/getting-started/index.md
+docs/getting-started/installation.md
+docs/getting-started/migrating.md
+docs/getting-started/upgrading.md
+docs/getting-started/whats-new.md
+docs/hosting.md
+docs/images/custom-social-image-preview-dark.png
+docs/images/custom-social-image-preview-light.png
+docs/images/dns records.png
+docs/images/giscus-discussion.png
+docs/images/giscus-example.png
+docs/images/giscus-repo.png
+docs/images/giscus-results.png
+docs/images/github-init-repo-options.png
+docs/images/github-quick-setup.png
+docs/images/quartz transform pipeline.png
+docs/images/quartz-layout-desktop.png
+docs/images/quartz-layout-mobile.png
+docs/images/quartz-layout-tablet.png
+docs/images/social-image-preview-dark.png
+docs/images/social-image-preview-light.png
+docs/index.md
+docs/layout-components.md
+docs/layout.md
+docs/philosophy.md
+docs/plugins/AliasRedirects.md
+docs/plugins/ArticleTitle.md
+docs/plugins/Assets.md
+docs/plugins/Backlinks.md
+docs/plugins/BasesPage.md
+docs/plugins/Breadcrumbs.md
+docs/plugins/CNAME.md
+docs/plugins/CanvasPage.md
+docs/plugins/Citations.md
+docs/plugins/Comments.md
+docs/plugins/ComponentResources.md
+docs/plugins/ContentIndex.md
+docs/plugins/ContentMeta.md
+docs/plugins/ContentPage.md
+docs/plugins/CrawlLinks.md
+docs/plugins/CreatedModifiedDate.md
+docs/plugins/CustomOgImages.md
+docs/plugins/Darkmode.md
+docs/plugins/Description.md
+docs/plugins/EncryptedPages Demo.md
+docs/plugins/EncryptedPages.md
+docs/plugins/ExplicitPublish.md
+docs/plugins/Explorer.md
+docs/plugins/Favicon.md
+docs/plugins/FolderPage.md
+docs/plugins/Fonts.md
+docs/plugins/Footer.md
+docs/plugins/Frontmatter.md
+docs/plugins/GitHubFlavoredMarkdown.md
+docs/plugins/Graph.md
+docs/plugins/HardLineBreaks.md
+docs/plugins/Latex.md
+docs/plugins/NotFoundPage.md
+docs/plugins/NoteProperties.md
+docs/plugins/ObsidianFlavoredMarkdown.md
+docs/plugins/OxHugoFlavoredMarkdown.md
+docs/plugins/PageTitle.md
+docs/plugins/ReaderMode.md
+docs/plugins/RecentNotes.md
+docs/plugins/RemoveDrafts.md
+docs/plugins/RoamFlavoredMarkdown.md
+docs/plugins/Search.md
+docs/plugins/Spacer.md
+docs/plugins/StackedPages.md
+docs/plugins/Static.md
+docs/plugins/SyntaxHighlighting.md
+docs/plugins/TableOfContents.md
+docs/plugins/TagList.md
+docs/plugins/TagPage.md
+docs/plugins/UnlistedPages.md
+docs/plugins/index.md
+docs/showcase.md
+docs/tags/component.md
+docs/tags/plugin.md
+docs/troubleshooting.md
+globals.d.ts
+index.d.ts
+package-lock.json
+package.json
+quartz.config.default.yaml
+quartz.config.yaml
+quartz.ts
+quartz/bootstrap-cli.mjs
+quartz/bootstrap-worker.mjs
+quartz/build.ts
+quartz/cfg.ts
+quartz/cli/args.js
+quartz/cli/constants.js
+quartz/cli/handlers.js
+quartz/cli/helpers.js
+quartz/cli/helpers.test.js
+quartz/cli/plugin-data.js
+quartz/cli/plugin-git-handlers.js
+quartz/cli/templates/blog.yaml
+quartz/cli/templates/default.yaml
+quartz/cli/templates/obsidian.yaml
+quartz/cli/templates/ttrpg.yaml
+quartz/components/Body.tsx
+quartz/components/ConditionalRender.tsx
+quartz/components/Date.tsx
+quartz/components/DesktopOnly.tsx
+quartz/components/Flex.tsx
+quartz/components/Head.tsx
+quartz/components/Header.tsx
+quartz/components/MobileOnly.tsx
+quartz/components/PageList.tsx
+quartz/components/Spacer.tsx
+quartz/components/external.ts
+quartz/components/frames/DefaultFrame.tsx
+quartz/components/frames/FullWidthFrame.tsx
+quartz/components/frames/MinimalFrame.tsx
+quartz/components/frames/frames.test.ts
+quartz/components/frames/index.ts
+quartz/components/frames/registry.ts
+quartz/components/frames/types.ts
+quartz/components/index.ts
+quartz/components/pages/404.tsx
+quartz/components/registry.test.ts
+quartz/components/registry.ts
+quartz/components/renderPage.test.ts
+quartz/components/renderPage.tsx
+quartz/components/scripts/popover.inline.ts
+quartz/components/scripts/popover.test.ts
+quartz/components/scripts/search.test.ts
+quartz/components/scripts/spa.inline.ts
+quartz/components/scripts/util.ts
+quartz/components/styles/popover.scss
+quartz/components/types.ts
+quartz/i18n/index.ts
+quartz/i18n/locales/ar-SA.ts
+quartz/i18n/locales/ca-ES.ts
+quartz/i18n/locales/cs-CZ.ts
+quartz/i18n/locales/de-DE.ts
+quartz/i18n/locales/definition.ts
+quartz/i18n/locales/en-GB.ts
+quartz/i18n/locales/en-US.ts
+quartz/i18n/locales/es-ES.ts
+quartz/i18n/locales/fa-IR.ts
+quartz/i18n/locales/fi-FI.ts
+quartz/i18n/locales/fr-FR.ts
+quartz/i18n/locales/he-IL.ts
+quartz/i18n/locales/hu-HU.ts
+quartz/i18n/locales/id-ID.ts
+quartz/i18n/locales/it-IT.ts
+quartz/i18n/locales/ja-JP.ts
+quartz/i18n/locales/kk-KZ.ts
+quartz/i18n/locales/ko-KR.ts
+quartz/i18n/locales/lt-LT.ts
+quartz/i18n/locales/nb-NO.ts
+quartz/i18n/locales/nl-NL.ts
+quartz/i18n/locales/pl-PL.ts
+quartz/i18n/locales/pt-BR.ts
+quartz/i18n/locales/ro-RO.ts
+quartz/i18n/locales/ru-RU.ts
+quartz/i18n/locales/th-TH.ts
+quartz/i18n/locales/tr-TR.ts
+quartz/i18n/locales/uk-UA.ts
+quartz/i18n/locales/vi-VN.ts
+quartz/i18n/locales/zh-CN.ts
+quartz/i18n/locales/zh-TW.ts
+quartz/plugins/config.ts
+quartz/plugins/emitters/assets.ts
+quartz/plugins/emitters/componentResources.ts
+quartz/plugins/emitters/helpers.ts
+quartz/plugins/emitters/index.ts
+quartz/plugins/emitters/static.ts
+quartz/plugins/filters/index.ts
+quartz/plugins/index.ts
+quartz/plugins/loader/componentLoader.ts
+quartz/plugins/loader/conditions.ts
+quartz/plugins/loader/config-loader.test.ts
+quartz/plugins/loader/config-loader.ts
+quartz/plugins/loader/frameLoader.ts
+quartz/plugins/loader/gitLoader.ts
+quartz/plugins/loader/index.ts
+quartz/plugins/loader/install-plugins.ts
+quartz/plugins/loader/loader.ts
+quartz/plugins/loader/types.ts
+quartz/plugins/pageTypes/404.ts
+quartz/plugins/pageTypes/dispatcher.test.ts
+quartz/plugins/pageTypes/dispatcher.ts
+quartz/plugins/pageTypes/index.ts
+quartz/plugins/pageTypes/matchers.ts
+quartz/plugins/quartz-plugins.schema.json
+quartz/plugins/transformers/index.ts
+quartz/plugins/types.ts
+quartz/plugins/vfile.ts
+quartz/processors/emit.ts
+quartz/processors/filter.ts
+quartz/processors/parse.ts
+quartz/static/giscus/dark.css
+quartz/static/giscus/light.css
+quartz/static/icon.png
+quartz/static/og-image.png
+quartz/static/portfolio.js
+quartz/static/project-media.js
+quartz/static/projects-gallery.js
+quartz/static/video-gallery.js
+quartz/styles/base.scss
+quartz/styles/callouts.scss
+quartz/styles/custom.scss
+quartz/styles/syntax.scss
+quartz/styles/variables.scss
+quartz/util/clone.ts
+quartz/util/ctx.ts
+quartz/util/emoji.ts
+quartz/util/emojimap.json
+quartz/util/escape.ts
+quartz/util/fileTrie.test.ts
+quartz/util/fileTrie.ts
+quartz/util/glob.ts
+quartz/util/jsx.tsx
+quartz/util/lang.ts
+quartz/util/log.ts
+quartz/util/path.test.ts
+quartz/util/path.ts
+quartz/util/perf.ts
+quartz/util/random.ts
+quartz/util/resources.tsx
+quartz/util/slugCollisions.test.ts
+quartz/util/slugCollisions.ts
+quartz/util/sourcemap.ts
+quartz/util/theme.ts
+quartz/util/trace.ts
+quartz/worker.ts
+scripts/OBSIDIAN-SYNC.md
+scripts/check-blue-diary-browser.mjs
+scripts/check-blue-diary-video-browser.mjs
+scripts/check-kings-court-browser.mjs
+scripts/check-projects-browser.mjs
+scripts/check-tengri-browser.mjs
+scripts/dev-brain.mjs
+scripts/lib/local-browser.mjs
+scripts/prepare-project-media.mjs
+scripts/project-schema.mjs
+scripts/projects-system.test.mjs
+scripts/sync-obsidian.mjs
+scripts/sync-obsidian.test.mjs
+scripts/test-portfolio-graph.mjs
+scripts/validate-brain.mjs
+scripts/validate-portfolio.mjs
+scripts/validate-projects.mjs
+scripts/validate-public-content.mjs
+scripts/validate-public-content.test.mjs
+scripts/video-posters.mjs
+tsconfig.json
+website/BLUE-DIARY-MEDIA.md
+website/BLUE-DIARY.md
+website/ContributionMediaCard.tsx
+website/FeaturedVideoPlayer.tsx
+website/KINGS-COURT.md
+website/PROJECTS.md
+website/PortfolioFrame.tsx
+website/Project.template.md
+website/ProjectMedia.tsx
+website/ProjectsShowcase.tsx
+website/README.md
+website/featured-video.scss
+website/kings-court.test.ts
+website/project-media.json
+website/project-themes.test.ts
+website/project-themes/BlueDiary.tsx
+website/project-themes/CourtMedia.tsx
+website/project-themes/KingsCourt.tsx
+website/project-themes/Tengri.tsx
+website/project-themes/blue-diary.scss
+website/project-themes/content.ts
+website/project-themes/index.ts
+website/project-themes/kings-court.scss
+website/project-themes/media.ts
+website/project-themes/tengri.scss
+website/project-themes/video-data.ts
+website/project-video-posters.json
+website/projects.scss
+website/projects.test.ts
+website/projects.ts
+website/public-project-metadata.json
+website/video-gallery.test.ts

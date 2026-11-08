@@ -19,7 +19,15 @@
     "test": "tsx --test",
     "profile": "0x -D prof ./quartz/bootstrap-cli.mjs build --concurrency=1",
     "install-plugins": "npx tsx ./quartz/plugins/loader/install-plugins.ts",
-    "prebuild": "npm run install-plugins"
+    "prebuild": "npm run install-plugins",
+    "sync:obsidian": "node scripts/sync-obsidian.mjs",
+    "dev:brain": "node scripts/dev-brain.mjs",
+    "build:brain": "npm run sync:obsidian && npm run validate:projects && node quartz/bootstrap-cli.mjs build",
+    "build:pages": "npm run validate:public && npm run validate:projects && node quartz/bootstrap-cli.mjs build",
+    "validate:public": "node scripts/validate-public-content.mjs",
+    "test:obsidian": "node --test scripts/sync-obsidian.test.mjs scripts/projects-system.test.mjs",
+    "validate:projects": "node scripts/validate-projects.mjs",
+    "media:posters": "node scripts/prepare-project-media.mjs"
   },
   "engines": {
     "npm": ">=10.9.2",

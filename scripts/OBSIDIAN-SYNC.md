@@ -1,0 +1,11 @@
+The CLI reads only `D:\SecondBrain\Public`. It never reads other vault folders or writes to the vault. Approved types: Markdown, PNG, JPG/JPEG, GIF, WebP, AVIF, ICO, PDF, MP3, MP4, WAV, OGG, WebM. SVG, HTML, scripts, unknown types, hidden names, Private, Templates, and symbolic links/junctions are excluded.
+
+`content/brain` is exclusively managed by the sync. Do not put manually maintained pages there: unrecognized files are removed on the next run. The homepage and Quartz configuration stay outside this directory. A full Quartz build clears stale generated output in `public`.
+
+Run `npm run sync:obsidian`, `npm run dev:brain`, or `npm run build:brain`. On Windows with restricted PowerShell execution policy, use `npm.cmd` instead of `npm`. Development synchronizes once before starting Quartz; rerun sync after changing the vault to refresh the running development server.
+
+Wikilinks resolve only to approved files (including unique basename matches). The vault's Public prefix is normalized. Unresolved wikilinks and their aliases become `Unavailable public reference`, even inside code or metadata, to avoid exposing targets. Unsafe Markdown destinations, raw HTML, ambiguous or unsupported syntax cause note exclusion; exclusions propagate to incoming links. Relative Markdown links are normalized. No attempt is made to discover whether a missing target exists privately. Ordinary approved prose and asset contents are not audited for sensitive information; Public remains the approval boundary.
+
+Detailed link targets and exclusions stay in gitignored `.obsidian-sync/report.json`, outside website content. Do not publish that directory. The synchronizer preserves unchanged file bytes and timestamps. File renames and deletes are reflected on the next sync/build. Source must remain stable during a run; do not edit or replace source/destination directories concurrently. Failed runs must be corrected before building; brain commands stop when synchronization fails.
+
+Verification: `npm run test:obsidian`, `npm run build:brain`, then `node scripts/validate-brain.mjs`. HTML validation checks local destination files, not heading anchors or external websites. No deployment or GitHub connection is performed.

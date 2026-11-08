@@ -1,5 +1,4 @@
 .DS_Store
-.gitignore
 node_modules
 public
 prof
@@ -12,3 +11,29 @@ replit.nix
 .quartz/
 quartz/cli/tui/dist/
 .turbo/
+
+# Local-only Obsidian diagnostics and fixtures
+.obsidian-sync/
+
+# Local secrets, credentials, and machine-specific configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+.aws/
+.ssh/
+.codex/
+.agents/
+**/[Pp][Rr][Ii][Vv][Aa][Tt][Ee]/
+
+# Temporary files and test/browser output
+*.log
+*.tmp
+*.bak
+*~
+coverage/
+playwright-report/
+test-results/

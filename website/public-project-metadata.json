@@ -1,0 +1,31 @@
+{
+  "Projects/Game-Jam/Tengri.md": {
+    "title": "Tengri",
+    "type": "project",
+    "visibility": "public",
+    "cover": "Projects/Game-Jam/Attachments/Pasted image 20261108232151.png"
+  },
+  "Projects/Team/Blue Diary.md": {
+    "project_id": "blue-diary",
+    "title": "Blue Diary",
+    "type": "project",
+    "visibility": "public",
+    "category": "team",
+    "genre": "Adventure / Puzzle",
+    "engine": "Unity",
+    "role": "Developer",
+    "status": "discontinued",
+    "studio": "No Studio",
+    "description": "A 2.5D pixel-art adventure and puzzle game about a father revisiting painful memories through his daughter's diary.",
+    "cover": "Projects/Team/Attachments/Pasted image 20261108002831.png"
+  },
+  "Projects/Game-Jam/Are you king enough.md": {
+    "project_id": "are-you-king-enough",
+    "title": "Are You King Enough",
+    "type": "project",
+    "visibility": "public",
+    "category": "Game Jam",
+    "cover": "Projects/Game-Jam/Attachments/Pasted image 20261108011547.png",
+    "description": "Play a king responding to the kingdom's requests, balancing limited resources as choices lead the experience down a darker path."
+  }
+}

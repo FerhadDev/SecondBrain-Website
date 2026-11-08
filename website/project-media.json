@@ -1,0 +1,52 @@
+{
+  "blue-diary": {
+    "videos": [
+      {
+        "src": "brain/Projects/Team/Attachments/Blue_Diary_Repaired_Optimized.pptx.mp4",
+        "title": "Blue Diary in motion",
+        "description": "The original project presentation, combining gameplay footage and presentation slides.",
+        "category": "gameplay",
+        "display_mode": "featured",
+        "poster_time": 20
+      },
+      {
+        "src": "brain/Projects/Team/Attachments/Blue_Diary_Repaired_Optimized.pptx (1).mp4",
+        "title": "Opening the diary",
+        "description": "A short recording of the diary opening in an interior room.",
+        "category": "gameplay",
+        "display_mode": "playlist",
+        "poster_time": 2.8
+      },
+      {
+        "src": "brain/Projects/Team/Attachments/Blue_Diary_Repaired_Optimized.pptx (2).mp4",
+        "title": "Interactions in motion",
+        "description": "A brief montage of a timed interaction and movement between outdoor and interior scenes.",
+        "category": "gameplay",
+        "display_mode": "playlist",
+        "poster_time": 0.2
+      },
+      {
+        "src": "brain/Projects/Team/Attachments/Blue_Diary_Repaired_Optimized.pptx.mp4",
+        "title": "A puzzle sequence",
+        "description": "An excerpt from the project presentation, shown from 00:44 to 01:01. This is game footage, not individual contribution evidence.",
+        "category": "puzzle",
+        "display_mode": "contribution",
+        "start": 44,
+        "end": 61,
+        "poster_time": 48
+      }
+    ],
+    "artwork": [
+      {
+        "src": "brain/Projects/Team/Attachments/Pasted image 20261108005805.png",
+        "title": "Mövlud concept studies",
+        "category": "movlud"
+      },
+      {
+        "src": "brain/Projects/Team/Attachments/Pasted image 20261108005742.png",
+        "title": "Mövlud and Ziver animation studies",
+        "category": "ziver"
+      }
+    ]
+  }
+}

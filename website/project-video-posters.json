@@ -1,0 +1,38 @@
+{
+  "brain/Projects/Team/Attachments/Blue_Diary_Repaired_Optimized.pptx (1).mp4": {
+    "poster": "project-media/posters/20cb363d49ce401c52e3.jpg",
+    "posterTime": 2.8,
+    "width": 1920,
+    "height": 1080,
+    "duration": 5,
+    "bytes": 5059508,
+    "sourceHash": "c0430665ab1e7c30c8838e17fdbf33e473dc09b6cd1c51378d9cb581ca4961ab"
+  },
+  "brain/Projects/Team/Attachments/Blue_Diary_Repaired_Optimized.pptx (2).mp4": {
+    "poster": "project-media/posters/2dfb73487e52afd3e7d4.jpg",
+    "posterTime": 0.2,
+    "width": 1920,
+    "height": 1080,
+    "duration": 6,
+    "bytes": 7226101,
+    "sourceHash": "a8938abab64205b3d22112d4abc2a77c7cea5ff39ba2f72b54afcd5df376290d"
+  },
+  "brain/Projects/Team/Attachments/Blue_Diary_Repaired_Optimized.pptx.mp4": {
+    "poster": "project-media/posters/e8cd5a50fec85eec4e99.jpg",
+    "posterTime": 20,
+    "width": 1920,
+    "height": 1080,
+    "duration": 102.101,
+    "bytes": 25555501,
+    "sourceHash": "51cfcc637334f373a48276f6726064d10c308fb622b4a7e9df65fd46a5971b10"
+  },
+  "brain/Projects/Team/Attachments/Blue_Diary_Repaired_Optimized.pptx.mp4#t=44,61": {
+    "poster": "project-media/posters/140977ad008fb602e1b7.jpg",
+    "posterTime": 48,
+    "width": 1920,
+    "height": 1080,
+    "duration": 102.101,
+    "bytes": 25555501,
+    "sourceHash": "51cfcc637334f373a48276f6726064d10c308fb622b4a7e9df65fd46a5971b10"
+  }
+}

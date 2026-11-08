@@ -3,6 +3,7 @@ import { DefaultFrame } from "./DefaultFrame"
 import { FullWidthFrame } from "./FullWidthFrame"
 import { MinimalFrame } from "./MinimalFrame"
 import { frameRegistry } from "./registry"
+import { PortfolioFrame } from "../../../website/PortfolioFrame"
 
 export type { PageFrame, PageFrameProps } from "./types"
 export { DefaultFrame } from "./DefaultFrame"
@@ -19,6 +20,7 @@ export type { RegisteredFrame } from "./registry"
  * The "default" frame reproduces the original three-column Quartz layout.
  */
 const builtinFrames: Record<string, PageFrame> = {
+  portfolio: PortfolioFrame,
   default: DefaultFrame,
   "full-width": FullWidthFrame,
   minimal: MinimalFrame,
