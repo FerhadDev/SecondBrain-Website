@@ -48,6 +48,9 @@ export async function validatePublicContent(root = "content") {
           throw new Error(`Non-public note rejected: ${rel}`)
         if (
           secret.test(text) ||
+          /(?:api[_-]?key|client[_-]?secret|access[_-]?token|password)\s*[:=]\s*["'][^"'\r\n]{8,}["']/i.test(
+            text,
+          ) ||
           /(?:file:|obsidian:)\/\/|[A-Z]:\\|(?:^|[(/])(?:private|\.obsidian)\//im.test(text)
         )
           throw new Error(`Sensitive content pattern: ${rel}`)

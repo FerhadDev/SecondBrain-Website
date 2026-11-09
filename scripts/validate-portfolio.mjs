@@ -8,7 +8,9 @@ import { parse } from "yaml"
 const config = parse(await fs.readFile("quartz.config.yaml", "utf8"))
 const sitePath = new URL(`https://${config.configuration.baseUrl}`).pathname.replace(/\/$/, "")
 
-const read = (file) => fs.readFile(path.join("public", file), "utf8")
+const outputRoot = process.argv[2] || "public"
+const read = (file) => fs.readFile(path.join(outputRoot, file), "utf8")
+const index = JSON.parse(await read("static/contentIndex.json"))
 const tree = fromHtml(await read("index.html"))
 const elements = []
 visit(tree, "element", (node) => {
@@ -35,6 +37,7 @@ for (const slug of [
   "brain/projects/game-jam/are-you-king-enough",
   "brain/projects/game-jam/lucid-space",
 ]) {
+  if (!index[slug]) continue // Deleted public projects must not become required ghost pages.
   const html = await read(slug + ".html")
   if (slug.endsWith("are-you-king-enough")) {
     assert(html.includes('class="kings-court"'))
@@ -48,7 +51,6 @@ for (const slug of [
 const graph = await read("graph.html")
 assert(graph.includes("graph-search") && graph.includes("graph-category"))
 assert(graph.includes("graph-outer"), "Native Quartz graph retained")
-const index = JSON.parse(await read("static/contentIndex.json"))
 // Hosted builds use the repository snapshot, without local sync diagnostics.
 async function countNotes(dir) {
   let count = 0
@@ -87,7 +89,7 @@ async function walk(dir) {
       if (sitePath && (target === sitePath || target.startsWith(sitePath + "/")))
         target = target.slice(sitePath.length) || "/"
       const full = target.startsWith("/")
-        ? path.join("public", target)
+        ? path.join(outputRoot, target)
         : path.resolve(path.dirname(file), target)
       const found = await Promise.all(
         [full, full + ".html", path.join(full, "index.html")].map((p) =>
@@ -102,7 +104,7 @@ async function walk(dir) {
     }
   }
 }
-await walk("public")
+await walk(outputRoot)
 console.log(
   `Portfolio validation passed: dynamic projects, 4 skill groups, ${notes.length} public notes, native graph, search markup, and ${checked} generated local links.`,
 )

@@ -1,15 +1,15 @@
 # First commit readiness — 2026-11-09
 
-Status: owner confirmed the public About Me information, project credits, Blue Diary artwork/videos/posters, Are You King Enough artwork and Tengri artwork. The reviewed first-commit files are being staged for approval; no commit, push or deployment authorized yet. No vault edits or Private note reads.
+Current automation review: portfolio base commit is `23fc1c9` on v5; the clone is non-shallow. The owner authorized the reviewed automation implementation's local commit, with no push or deployment. All 45 tests, Pages build, generated link/graph checks and whitespace checks passed. Vault files, branches and remotes were preserved; original first-commit inspection details below are historical.
 
 ## Configuration and automation
 
 - The owner confirmed `https://ferhaddev.github.io/SecondBrain-Website/`, with no custom domain. `configuration.baseUrl` matches; the CNAME plugin is disabled and the latest full build contains no `public/CNAME`. This confirms local output, not a live deployment. Remote Pages configuration remains unverified.
-- At the start of this turn, origin already pointed to `https://github.com/FerhadDev/SecondBrain-Website.git`; upstream remains Quartz. Neither remote was changed during this turn. Branch remains `v5`, with one locally available shallow upstream commit and no local portfolio commit.
+- Local branch remains v5 with full (non-shallow) history, based on portfolio commit `23fc1c9`. Origin and upstream still match the account repository and Quartz; neither was changed during automation work or review.
 - Both Cloudflare deployment jobs, container publishing, automatic merging and release tag creation remain explicitly disabled. Inherited build jobs retain the upstream repository guard.
-- Added `.github/workflows/pages.yaml`, using supported `configure-pages@v5`, `upload-pages-artifact@v4`, and `deploy-pages@v4` actions. It runs only on manual dispatch for this repository's default branch; pushes do not deploy. Deployment has a `github-pages` environment and scoped Pages/OIDC permissions; `enablement: false` prevents automatic Pages enablement. Actions were checked against https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages.
+- `.github/workflows/pages.yaml` uses supported Pages actions. The reviewed automation implementation adds v5-push deployment and retains manual dispatch, restricted to this repository and v5. Deployment still uses the `github-pages` environment, scoped permissions and `enablement: false`; failed builds cannot reach deployment. No push, deployment or Pages enablement performed. See `SYNC_WORKFLOW.md`.
 - Hosted builds run `npm ci`, install existing Quartz plugins, test isolated fixtures, and run `npm run build:pages` against checked-out repository content. This command validates publication flags, paths, types and credential patterns before building. It never invokes vault synchronization. No local vault or ignored sync report is required. Portfolio validation now counts repository notes directly and handles the Pages subpath.
-- To deploy later, separately resolve publication approvals, commit/push, configure Pages to use GitHub Actions and deliberately dispatch the workflow on the default branch. Nothing here changes account settings or repository visibility; Pages/account-plan availability is not verified. The workflow has not been exercised on a GitHub runner.
+- To deploy later, review and commit the workflow changes, finish repository bootstrap, configure Pages for GitHub Actions, then deliberately authorize a v5 push or dispatch. No account settings or visibility were changed; remote Pages/account-plan availability remains unverified. The workflow has not been exercised on a GitHub runner.
 
 ## Confirmed approvals and remaining presentation note
 
@@ -35,7 +35,7 @@ All 18 synchronized attachments match their approved Public source. All four pos
 
 `FIRST_COMMIT_FILES.txt` lists exact additions/modifications/deletion relative to HEAD, plus the complete proposed repository snapshot (including inherited engine files). The explicit list is used for staging, not a blind `git add -A`; commit and push require the owner's next approval.
 
-## Remote and staged-review findings
+## Historical first-commit remote and staged-review findings
 
 - Read-only remote inspection confirmed the repository exists: remote HEAD is `main` at `d8507931ee5ca95312037d8c9731c09c6525f2e7`, a separate root commit containing only `README.md`. It was fetched for inspection without merging. Local branch remains `v5`; the old `origin/v5` reference is stale, not evidence that remote `v5` exists.
 - Origin and upstream match the requested account repository and Quartz respectively. All 104 proposed changed paths are preserved; only `content/.gitkeep` is deleted. Quartz's MIT license/copyright remains unchanged. Engine source templates under `quartz/cli/templates/` are required source, not Obsidian vault templates.

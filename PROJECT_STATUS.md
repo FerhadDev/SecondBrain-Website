@@ -18,7 +18,8 @@
 - Consolidated project instructions and created this status file; application code unchanged by this documentation task.
 - GitHub preparation audit recorded in `GITHUB_PREPARATION.md`; hardened ignore rules, retained Git history/remotes, and preserved all website content.
 - First-commit preparation: owner-confirmed project Pages base URL, disabled publishing/auto-merge jobs, corrected future-sync Blue Diary cover, and Pages-aware link validation. Exact candidate files in `FIRST_COMMIT_FILES.txt`; current findings in `PUBLICATION_READINESS.md`.
-- Pages technical preparation: CNAME disabled; manual-only dedicated workflow with automatic enablement disabled; vault-independent `build:pages` and repository privacy gate. Hosted validation no longer needs local sync reports.
+- Pages technical preparation: CNAME disabled; dedicated v5-push/manual workflow with automatic Pages enablement disabled; vault-independent `build:pages` and repository privacy gate. Hosted validation needs no local sync reports.
+- Public automation: `brain:watch`, `brain:sync`, `brain:publish` reuse public sync. Debounced serialized watcher, transactional rollback/last-valid preview, content-only publishing with interactive confirmation and remote-tip checks. Existing `dev:brain` preview reuses it. Instructions: `SYNC_WORKFLOW.md`; no service or unattended publishing enabled.
 
 ## Current problems
 - Tengri integration: full build, TypeScript, 7 sync/privacy tests, 20 project/theme tests, local-link/portfolio/graph checks and desktop/mobile browser checks passed.
@@ -28,6 +29,7 @@
 - Latest snapshot build passed (113 output files, no CNAME), 9 privacy/sync and 23 project/media tests passed, plus graph and 1,265 local-link checks. GitHub runner and remote Pages/account settings remain unverified; no vault access, deployment or settings changes during technical preparation.
 - Tengri has no local video, lessons-learned content, or exact Unity version; no details were invented.
 - Existing unrelated tracked changes and untracked application files were present and preserved.
+- Automation review: 22 privacy/sync/watcher/publisher tests and 23 project/theme/media tests passed; full Pages build, four rendered games and 1,265 local-link/graph checks passed. Hardened rollback against diagnostic failures, bound publishing to the validated snapshot, and wait for build-child shutdown. Git publishing tests use mocked mutations; no push/deployment or vault edits performed.
 
 ## Next task
-- First-commit files staged for owner review; await explicit commit/push approval. Remote main contains a separate README-only root commit; local v5 remains shallow. Preserve remote main and reconcile default-branch history separately before Pages deployment.
+- Automation review complete; local commit authorized. Push v5 only after explicit approval; that push triggers the Pages workflow. `brain:publish` refuses staged work, uncommitted build/website code and mismatched remote history. No branch, remote or account-setting changes performed.

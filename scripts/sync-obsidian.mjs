@@ -15,8 +15,8 @@ import {
 } from "./project-schema.mjs"
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
-const approved = "D:\\SecondBrain\\Public"
-const assets = new Set([
+export const approved = "D:\\SecondBrain\\Public"
+export const assets = new Set([
   ".png",
   ".jpg",
   ".jpeg",
@@ -31,12 +31,12 @@ const assets = new Set([
   ".ogg",
   ".webm",
 ])
-const forbidden = (p) =>
+export const forbidden = (p) =>
   p.split(/[\\/]/).some((s) => s.startsWith(".") || /^(private|templates)$/i.test(s))
 const inside = (root, p) =>
   p === root ||
   (!path.relative(root, p).startsWith("..") && !path.isAbsolute(path.relative(root, p)))
-async function noLinks(p) {
+export async function noLinks(p) {
   for (let part = path.resolve(p); ;) {
     let stat
     try {
