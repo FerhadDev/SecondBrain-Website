@@ -4,6 +4,8 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { sync } from './sync-obsidian.mjs'
 
+await fs.mkdir(path.resolve('.obsidian-sync'), { recursive: true })
+
 test('public-only links, exclusion, updates, renames, deletion and repeatability', async () => {
   const root = await fs.mkdtemp(path.resolve('.obsidian-sync/fixture-'))
   const source = path.join(root, 'Public'), destination = path.join(root, 'content/brain')

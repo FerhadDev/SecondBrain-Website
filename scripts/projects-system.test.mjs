@@ -5,6 +5,8 @@ import path from "node:path"
 import { sync } from "./sync-obsidian.mjs"
 import { validateDirectory, validateProject } from "./project-schema.mjs"
 
+await fs.mkdir(path.resolve(".obsidian-sync"), { recursive: true })
+
 test("project lifecycle, metadata, media, duplicate titles, private transitions and traversal", async () => {
   const root = await fs.mkdtemp(path.resolve(".obsidian-sync/projects-"))
   const source = path.join(root, "Public"),

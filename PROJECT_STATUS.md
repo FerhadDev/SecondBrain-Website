@@ -30,6 +30,7 @@
 - Tengri has no local video, lessons-learned content, or exact Unity version; no details were invented.
 - Existing unrelated tracked changes and untracked application files were present and preserved.
 - Automation review: 22 privacy/sync/watcher/publisher tests and 23 project/theme/media tests passed; full Pages build, four rendered games and 1,265 local-link/graph checks passed. Hardened rollback against diagnostic failures, bound publishing to the validated snapshot, and wait for build-child shutdown. Git publishing tests use mocked mutations; no push/deployment or vault edits performed.
+- Automatic Pages run 42638991131 (da9fdc1) failed in build step 6: eight fixture tests called mkdtemp before ignored `.obsidian-sync/` existed. Retrieved job logs confirm ENOENT; deploy was skipped. Both affected test files now create the fixture parent independently. Fresh-directory suites, all 22 workflow tests, Pages build and link/graph checks pass locally; hosted rerun remains pending. Existing unrelated project-note edit preserved.
 
 ## Next task
-- Automation review complete; local commit authorized. Push v5 only after explicit approval; that push triggers the Pages workflow. `brain:publish` refuses staged work, uncommitted build/website code and mismatched remote history. No branch, remote or account-setting changes performed.
+- Repair reviewed for the authorized local commit: both suites pass independently without an existing fixture directory; all 22 workflow tests, Pages build, whitespace and link/graph checks pass. Await separate push approval before hosted CI verification. Unrelated local note edit remains excluded; no vault edits or deployment.
