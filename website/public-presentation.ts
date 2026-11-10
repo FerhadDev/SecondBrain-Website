@@ -6,14 +6,26 @@ import { nodeText } from "./project-themes/content"
 // Verified public 404; no official replacement was found. Never rewrite the vault/snapshot.
 export const unavailableRepository = "https://github.com/Estefan009/GameJamPlus"
 export const unavailableLabel = "Repository unavailable (HTTP 404)"
-const unavailableText = /(?<![\w./-])(?:https:\/\/)?github\.com\/Estefan009\/GameJamPlus(?![\w./-])/gi
+const unavailableText =
+  /(?<![\w./-])(?:https:\/\/)?github\.com\/Estefan009\/GameJamPlus(?![\w./-])/gi
 
 export function preparePublicPresentation(tree: Root, file: VFile) {
   if (file.data.frontmatter?.visibility !== "public") return
+  // ContentIndex carries tags, not arbitrary frontmatter: preserve semantic categories there.
+  const fm = file.data.frontmatter
+  const kind = String(fm.type).toLowerCase(),
+    category = String(fm.category).toLowerCase()
+  const tag = ["skill", "achievement", "project"].includes(kind)
+    ? kind
+    : category === "skills"
+      ? "skill"
+      : category === "achievements"
+        ? "achievement"
+        : ""
+  if (tag) fm.tags = [...new Set([...(Array.isArray(fm.tags) ? fm.tags : []), tag])]
   const first = tree.children.findIndex((n) => n.type !== "text" || n.value.trim())
   const heading = tree.children[first]
   if (
-    file.data.frontmatter.type === "project" &&
     heading?.type === "element" &&
     heading.tagName === "h1" &&
     nodeText(heading).trim().toLowerCase() ===

@@ -1,7 +1,7 @@
 import fs from "node:fs/promises"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
-import { frontmatter, unpublished } from "./project-schema.mjs"
+import { frontmatter, unpublished, validateKnowledgeNote } from "./project-schema.mjs"
 
 const media = new Set([
   ".png",
@@ -44,6 +44,8 @@ export async function validatePublicContent(root = "content") {
       if (ext === ".md") {
         const text = await fs.readFile(full, "utf8")
         const { data } = frontmatter(text)
+        if (validateKnowledgeNote(data).length)
+          throw new Error(`Invalid knowledge-note metadata: ${rel}`)
         if (unpublished(data) || (rel.startsWith("brain/") && data.visibility !== "public"))
           throw new Error(`Non-public note rejected: ${rel}`)
         if (

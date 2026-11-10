@@ -46,6 +46,8 @@ I enjoy working on both the technical and creative sides of game development, es
 
 ## 🛠️ Technical Skills
 
+See [Skills](brain/Skills.md) for examples of my work and project evidence.
+
 ### Game Engines
 - Unity
 - Unreal Engine
@@ -85,7 +87,7 @@ The project was developed during a game jam, where I contributed to gameplay dev
 
 **Technologies:** Unity, C#, DOTween
 
-[Play on itch.io](https://farhaddev.itch.io/are-you-king-enough)
+[Download on itch.io](https://farhaddev.itch.io/are-you-king-enough)
 
 ### [Lucid Space](brain/Projects/Game-Jam/Lucid%20Space.md)
 
@@ -94,7 +96,7 @@ Vol. 3 over 2 days with a 2D pixel-art, top-down style. My role was Game Develop
 
 [View on itch.io](https://hyperarcstudios.itch.io/lucid-space)
 
-### Redactor
+### [Redactor](brain/Projects/Team/Redactor.md)
 
 **Genre:** Decision-Based / Political Simulation
 
@@ -106,9 +108,11 @@ The project explores decision-making, resource management, and the consequences 
 
 **Engine:** Unity
 
-*Detailed public documentation will be added when the project page is ready.*
+*See [Redactor](brain/Projects/Team/Redactor.md) for the currently documented project details.*
 
 ## 🏆 Achievements & Activities
+
+See [Achievements](brain/Achievements.md) for competition results and project showcase milestones.
 
 ### Green Energy Hackathon — First Place (2026)
 
@@ -156,10 +160,23 @@ I maintain a personal **Second Brain** to organize my projects, technical knowle
 
 My goal is to continuously improve my development skills while building a connected knowledge base that reflects my work and learning journey.
 
+## Public skill and achievement notes
+
+- [Unity and C# gameplay programming](brain/Skills/Unity%20and%20CSharp%20Gameplay%20Programming.md)
+- [Gameplay UI](brain/Skills/Gameplay%20UI.md)
+- [Puzzle and interactive audio systems](brain/Skills/Puzzle%20and%20Interactive%20Audio%20Systems.md)
+- [Interaction systems](brain/Skills/Interaction%20Systems.md)
+- [Game design and prototyping](brain/Skills/Game%20Design%20and%20Prototyping.md)
+- [Unity teaching](brain/Skills/Unity%20Teaching.md)
+- [Green Energy Hackathon 2026 — First Place](brain/Achievements/Green%20Energy%20Hackathon%202026%20-%20First%20Place.md)
+- [Turkic Game Jam 2025 — Fourth Place](brain/Achievements/Turkic%20Game%20Jam%202025%20-%20Fourth%20Place.md)
+- [Gamepons Compass III Demo Day — Project Showcase](brain/Achievements/Gamepons%20Compass%20III%20Demo%20Day%20-%20Project%20Showcase.md)
+
 ## 🌐 Connect With Me
 
 - **GitHub:** [FerhadDev](https://github.com/FerhadDev)
 - **itch.io:** [farhaddev](https://farhaddev.itch.io)
+- **LinkedIn:** [ferhadzamanov](https://www.linkedin.com/in/ferhadzamanov/)
 
 ---
 

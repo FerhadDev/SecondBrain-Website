@@ -39,3 +39,7 @@ Mövlud worked in a government job. On his 65th birthday, he returns home and fi
 ## Screen shots
 
 ![272](brain/Projects/Team/Attachments/Pasted%20image%2020261108005742.png)![142](brain/Projects/Team/Attachments/Pasted%20image%2020261108005805.png)![Blue_Diary_Repaired_Optimized.pptx.mp4](brain/Projects/Team/Attachments/Blue_Diary_Repaired_Optimized.pptx.mp4)![Blue_Diary_Repaired_Optimized.pptx (1).mp4](brain/Projects/Team/Attachments/Blue_Diary_Repaired_Optimized.pptx%20(1).mp4)![Blue_Diary_Repaired_Optimized.pptx (2).mp4](brain/Projects/Team/Attachments/Blue_Diary_Repaired_Optimized.pptx%20(2).mp4)
+
+## Related public notes
+
+- [Puzzle and interactive audio systems](brain/Skills/Puzzle%20and%20Interactive%20Audio%20Systems.md)

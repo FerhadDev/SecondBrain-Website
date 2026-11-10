@@ -17,13 +17,19 @@ if (!window.__portfolioGraph) {
           "",
         )
         const category = (slug, note) =>
-          /\/projects\//i.test(slug) || note.tags?.includes("project")
+          note.tags?.some((t) => /^project$/i.test(t))
             ? "Projects"
-            : /\/skills?\//i.test(slug)
+            : note.tags?.some((t) => /^(skill|skills)$/i.test(t))
               ? "Skills"
-              : /\/achievements?\//i.test(slug)
+              : note.tags?.some((t) => /^(achievement|achievements)$/i.test(t))
                 ? "Achievements"
-                : "Knowledge"
+                : /\/projects\//i.test(slug) || note.tags?.includes("project")
+                  ? "Projects"
+                  : /\/skills?\//i.test(slug)
+                    ? "Skills"
+                    : /\/achievements?\//i.test(slug)
+                      ? "Achievements"
+                      : "Knowledge"
         const colors = {
           Projects: "#8aa9ff",
           Skills: "#ae8aff",

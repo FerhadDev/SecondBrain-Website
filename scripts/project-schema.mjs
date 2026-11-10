@@ -29,6 +29,8 @@ export function validateProject(fm) {
     if (typeof fm[key] !== "string" || !fm[key].trim())
       issues.push(`${key}: required nonempty string`)
   if (fm.type !== undefined && fm.type !== "project") issues.push("type: expected project")
+  if (fm.distribution !== undefined && !["download", "browser"].includes(fm.distribution))
+    issues.push("distribution: expected download or browser")
   if (fm.visibility !== undefined && !["public", "private", "unlisted"].includes(fm.visibility))
     issues.push("visibility: unsupported value")
   for (const key of ["description", "category", "status", "cover"])
@@ -89,6 +91,21 @@ export function validateProject(fm) {
       Object.values(fm.links).some((v) => !safeUrl(v)))
   )
     issues.push("links: expected mapping of labels to HTTPS URLs")
+  return issues
+}
+export function validateKnowledgeNote(fm) {
+  if (!["skill", "achievement"].includes(fm.type)) return []
+  const issues = []
+  if (typeof fm.title !== "string" || !fm.title.trim())
+    issues.push("title: required nonempty string")
+  if (fm.visibility !== "public") issues.push("visibility: expected public")
+  if (fm.category !== undefined && String(fm.category).toLowerCase() !== fm.type + "s")
+    issues.push("category: expected " + fm.type + "s")
+  if (
+    fm.tags !== undefined &&
+    (!Array.isArray(fm.tags) || fm.tags.some((t) => typeof t !== "string"))
+  )
+    issues.push("tags: expected string list")
   return issues
 }
 export function safeUrl(value) {

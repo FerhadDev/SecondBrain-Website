@@ -1,5 +1,6 @@
 ---
 project_id: are-you-king-enough
+distribution: download
 title: Are You King Enough
 type: project
 visibility: public

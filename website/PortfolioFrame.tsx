@@ -4,6 +4,7 @@ import { pathToRoot } from "../quartz/util/path"
 import { ProjectMedia } from "./ProjectMedia"
 import { discoverProjects } from "./projects"
 import { ProjectsShowcase } from "./ProjectsShowcase"
+import { itchActionLabel, profileLinks } from "./profile-links"
 
 const plain = (node: any): string =>
   node?.type === "text" ? node.value : (node?.children ?? []).map(plain).join("")
@@ -242,7 +243,7 @@ export const PortfolioFrame: PageFrame = {
                               <a href={href(f.slug!)}>Project details →</a>
                               {play && (
                                 <a href={play} target="_blank" rel="noopener noreferrer">
-                                  Play on itch.io ↗
+                                  {itchActionLabel(discovered.distribution)} ↗
                                 </a>
                               )}
                             </div>
@@ -374,8 +375,12 @@ export const PortfolioFrame: PageFrame = {
             <p>Gameplay, systems, and everything I learn along the way.</p>
           </div>
           <div>
-            <a href="https://github.com/FerhadDev">GitHub ↗</a>
-            <a href="https://farhaddev.itch.io">itch.io ↗</a>
+            <span class="eyebrow">Connect With Me</span>
+            {profileLinks(about).map((link) => (
+              <a href={link.href} target="_blank" rel="noopener noreferrer">
+                {link.label} ↗
+              </a>
+            ))}
             <a href={href("graph")}>Second Brain →</a>
             <small>© {new Date().getFullYear()} Farhad Zamanov</small>
           </div>

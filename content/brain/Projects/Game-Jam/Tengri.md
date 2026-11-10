@@ -85,6 +85,10 @@ After the jam, we continued developing the prototype to make it more fun and pla
 
 ## Related public notes
 
+- [Unity and C# gameplay programming](brain/Skills/Unity%20and%20CSharp%20Gameplay%20Programming.md)
+- [Gameplay UI](brain/Skills/Gameplay%20UI.md)
+- [Turkic Game Jam 2025 — Fourth Place](brain/Achievements/Turkic%20Game%20Jam%202025%20-%20Fourth%20Place.md)
+
 - [Are You King Enough](brain/Projects/Game-Jam/Are%20you%20king%20enough.md).
 - [Lucid Space](brain/Projects/Game-Jam/Lucid%20Space.md).
 

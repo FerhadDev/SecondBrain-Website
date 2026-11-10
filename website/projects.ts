@@ -12,6 +12,7 @@ export interface ShowcaseProject {
   technologies: string[]
   cover: string
   itch: string
+  distribution?: "download" | "browser"
   status: string
   featured: boolean
   order: number
@@ -214,6 +215,10 @@ export function discoverProjects(
       technologies: [...new Map(technologies.map((t) => [t.toLowerCase(), t])).values()],
       cover: coverImage(file, assets),
       itch,
+      distribution:
+        fm.distribution === "download" || fm.distribution === "browser"
+          ? fm.distribution
+          : undefined,
       status: value(fm.status),
       featured: fm.featured === true,
       order: Number.isFinite(order) ? order : Number.POSITIVE_INFINITY,

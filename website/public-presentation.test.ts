@@ -82,6 +82,20 @@ test("only the verified unavailable repository is de-linked in HTML and public s
     children: [{ type: "text", value: unavailableLabel }],
   })
   assert(tree.children[1].type === "element" && tree.children[1].properties.href === good)
-  assert.equal(file.data.text, `Repository: ${unavailableLabel}\nOther: ${unavailableRepository}-tools`)
+  assert.equal(
+    file.data.text,
+    `Repository: ${unavailableLabel}\nOther: ${unavailableRepository}-tools`,
+  )
   assert.equal(file.data.description, `Repository: ${unavailableLabel}`)
+})
+
+test("public skill/achievement metadata becomes index tags without fabricating nodes or edges", () => {
+  for (const type of ["skill", "achievement"]) {
+    const file = new VFile()
+    file.data.frontmatter = { title: "Real note", type, visibility: "public", tags: ["existing"] }
+    file.data.links = []
+    preparePublicPresentation({ type: "root", children: [] }, file)
+    assert.deepEqual(file.data.frontmatter.tags, ["existing", type])
+    assert.deepEqual(file.data.links, [])
+  }
 })

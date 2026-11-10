@@ -2,6 +2,10 @@ import assert from "node:assert/strict"
 import { withLocalBrowser } from "./lib/local-browser.mjs"
 
 await withLocalBrowser("public", async ({ origin, send, evaluate, until, delay }) => {
+  const graphIndex = await (await fetch(origin + "/static/contentIndex.json")).json()
+  const expectedNotes = Object.keys(graphIndex).filter(
+    (s) => s.startsWith("brain/") && !s.endsWith("/index"),
+  ).length
   await send("Page.addScriptToEvaluateOnNewDocument", {
     source: `window.__portfolioErrors=[];
       window.addEventListener('error',e=>{if(e.message)window.__portfolioErrors.push(e.message)});
@@ -12,6 +16,8 @@ await withLocalBrowser("public", async ({ origin, send, evaluate, until, delay }
     "/",
     "/projects",
     "/graph",
+    "/brain/skills",
+    "/brain/achievements",
     "/brain/projects/team/blue-diary",
     "/brain/projects/game-jam/are-you-king-enough",
     "/brain/projects/game-jam/tengri",
@@ -54,7 +60,16 @@ await withLocalBrowser("public", async ({ origin, send, evaluate, until, delay }
       )
     }
     if (route === "/graph")
-      await until("document.querySelectorAll('.brain-graph svg a').length===5")
+      await until(`document.querySelectorAll('.brain-graph svg a').length===${expectedNotes}`)
+    if (route === "/brain/skills") {
+      assert.equal(await evaluate("document.querySelectorAll('article table tbody tr').length"), 6)
+      assert.equal(await evaluate("document.querySelectorAll('article table a.internal').length"), 9)
+      assert(await evaluate("!!document.querySelector('.page-listing')"))
+    }
+    if (route === "/brain/achievements") {
+      assert(await evaluate("document.querySelector('article').textContent.includes('2026')"))
+      assert(await evaluate("!!document.querySelector('.page-listing')"))
+    }
     if (route.endsWith("lucid-space"))
       assert.equal(await evaluate("document.querySelector('h1').id"), "lucid-space")
     assert.deepEqual(await evaluate("window.__portfolioErrors"), [], route + " console errors")
@@ -77,6 +92,6 @@ await withLocalBrowser("public", async ({ origin, send, evaluate, until, delay }
     "real Mermaid rendering console errors",
   )
   console.log(
-    "Passed: seven routes; one H1; preserved anchor; real Mermaid diagram; no console errors/missing images; 320/390px layouts; graph; unavailable repository removed from search index.",
+    "Passed: nine routes including authored Skills/Achievements hubs and listings; one H1; preserved anchor; real Mermaid diagram; no console errors/missing images; 320/390px layouts; graph; unavailable repository removed from search index.",
   )
 })

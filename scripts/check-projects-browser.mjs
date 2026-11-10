@@ -117,18 +117,60 @@ try {
     deviceScaleFactor: 1,
     mobile: false,
   })
+  await send("Page.navigate", { url: origin + "/" })
+  await until("document.readyState==='complete' && document.querySelector('.project-card')")
+  assert.equal(
+    await evaluate(
+      "Array.from(document.querySelectorAll('.project-card')).find(c=>c.querySelector('h3')?.textContent==='Are You King Enough').querySelector('.card-links a[href*=\"itch.io\"]').textContent.trim()",
+    ),
+    "Download on itch.io ↗",
+  )
+  assert.equal(
+    await evaluate(
+      "document.querySelector('.portfolio-footer a[href=\"https://www.linkedin.com/in/ferhadzamanov/\"]')?.target",
+    ),
+    "_blank",
+  )
+  assert(
+    await evaluate(
+      "document.querySelector('.portfolio-footer a[href*=\"linkedin.com\"]').rel.includes('noopener')",
+    ),
+  )
+  for (const width of [1440, 390, 320]) {
+    await send("Emulation.setDeviceMetricsOverride", {
+      width,
+      height: 1100,
+      deviceScaleFactor: 1,
+      mobile: false,
+    })
+    await delay(100)
+    assert.equal(
+      await evaluate("document.documentElement.scrollWidth>innerWidth"),
+      false,
+      "homepage overflow at " + width,
+    )
+  }
+  await send("Emulation.setDeviceMetricsOverride", {
+    width: 1440,
+    height: 1100,
+    deviceScaleFactor: 1,
+    mobile: false,
+  })
   await send("Page.navigate", { url: origin + "/projects" })
   await until(
     `document.readyState === 'complete' && document.querySelector('[data-gallery-controls]')?.hidden === false`,
   )
   const projectCount = await evaluate(`document.querySelectorAll('[data-gallery-card]').length`)
-  assert.equal(projectCount, 4)
+  const publicIndex = await (await fetch(origin + "/static/contentIndex.json")).json()
+  const expectedProjects = Object.entries(publicIndex).filter(([slug, note]) =>
+    slug.startsWith("brain/projects/") && !slug.endsWith("/index") && note.tags?.includes("project"))
+  assert.equal(projectCount, expectedProjects.length)
   const titles = await evaluate(
     "Array.from(document.querySelectorAll('[data-gallery-card] h2')).map(n=>n.textContent)",
   )
   assert.deepEqual(
     titles.slice().sort(),
-    ["Are You King Enough", "Blue Diary", "Lucid Space", "Tengri"].sort(),
+    expectedProjects.map(([, note]) => note.title).sort(),
   )
   await evaluate(
     "Promise.all(Array.from(document.querySelectorAll('[data-gallery-card] img')).map(i=>{i.loading='eager';return i.decode()}))",
@@ -160,8 +202,9 @@ try {
   await evaluate(
     "(()=>{const s=document.querySelector('[data-gallery-category]');s.value='Team';s.dispatchEvent(new Event('change',{bubbles:true}))})()",
   )
+  assert((await evaluate(`${visible}.length`)) >= 1)
+  await setSearch("Blue Diary")
   assert.equal(await evaluate(`${visible}.length`), 1)
-  assert((await evaluate(`${visible}[0].textContent`)).includes("Blue Diary"))
   for (const label of ["Team Project", "Adventure / Puzzle", "Unity", "Discontinued"])
     assert((await evaluate(`${visible}[0].textContent`)).includes(label))
   await setSearch("Lucid")
@@ -223,7 +266,11 @@ try {
     `Array.from(document.querySelectorAll('.result-card')).some(n=>n.textContent.includes('Blue Diary'))`,
   )
   await send("Page.navigate", { url: origin + "/graph" })
-  await until(`document.querySelectorAll('.brain-graph svg a').length === 5`)
+  const graphIndex = await (await fetch(origin + "/static/contentIndex.json")).json()
+  const expectedNotes = Object.keys(graphIndex).filter(
+    (s) => s.startsWith("brain/") && !s.endsWith("/index"),
+  ).length
+  await until(`document.querySelectorAll('.brain-graph svg a').length === ${expectedNotes}`)
   console.log(
     "Browser checks passed: current projects, search, category/combined filters, empty state, reset/focus, responsive layouts, SPA links, native search, and graph.",
   )

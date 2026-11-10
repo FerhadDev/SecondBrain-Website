@@ -28,7 +28,7 @@
     "build:brain": "npm run sync:obsidian && npm run validate:projects && node quartz/bootstrap-cli.mjs build",
     "build:pages": "npm run validate:public && npm run validate:projects && node quartz/bootstrap-cli.mjs build",
     "validate:public": "node scripts/validate-public-content.mjs",
-    "test:obsidian": "node --test scripts/sync-obsidian.test.mjs scripts/projects-system.test.mjs",
+    "test:obsidian": "node --test scripts/sync-obsidian.test.mjs scripts/projects-system.test.mjs scripts/public-knowledge.test.mjs",
     "validate:projects": "node scripts/validate-projects.mjs",
     "media:posters": "node scripts/prepare-project-media.mjs"
   },

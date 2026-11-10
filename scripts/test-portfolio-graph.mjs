@@ -40,7 +40,9 @@ const host = {
   isConnected: true,
   querySelector: (s) => parts[s],
 }
-const index = JSON.parse(await fs.readFile("public/static/contentIndex.json", "utf8"))
+const index = JSON.parse(
+  await fs.readFile(process.argv[2] || "public/static/contentIndex.json", "utf8"),
+)
 const document = {
   querySelectorAll: () => [host],
   createElementNS: (_, tag) => new Element(tag),
@@ -87,9 +89,23 @@ assert.equal(
   noteEntries.filter(([slug, note]) => /\/projects\//i.test(slug) || note.tags?.includes("project"))
     .length,
 )
-select.value = "Achievements"
-select.listeners.change()
-assert.equal(links().length, 0, "No fabricated achievement nodes")
+for (const [name, pattern] of [
+  ["Skills", /\/skills?\//i],
+  ["Achievements", /\/achievements?\//i],
+]) {
+  select.value = name
+  select.listeners.change()
+  const singular = name.slice(0, -1).toLowerCase()
+  assert.equal(
+    links().length,
+    noteEntries.filter(
+      ([slug, note]) =>
+        pattern.test(slug) ||
+        note.tags?.some((t) => [singular, name.toLowerCase()].includes(t.toLowerCase())),
+    ).length,
+    name + " shows only actual public notes",
+  )
+}
 reset.listeners.click()
 assert.equal(links().length, total)
 svg.listeners.wheel({ preventDefault() {}, deltaY: -100 })

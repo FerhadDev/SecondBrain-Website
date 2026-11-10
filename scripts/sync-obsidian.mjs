@@ -10,6 +10,7 @@ import {
   frontmatter,
   unpublished,
   validateProject,
+  validateKnowledgeNote,
   safeUrl,
   validateVideoMetadata,
 } from "./project-schema.mjs"
@@ -71,7 +72,7 @@ export async function sync({
     ),
   )
   const supplementFields = new Set(
-    "project_id title type visibility category genre engine role status studio description cover featured featured_order".split(
+    "project_id title type visibility category genre engine role status studio description cover featured featured_order distribution".split(
       " ",
     ),
   )
@@ -124,6 +125,7 @@ export async function sync({
         continue
       }
       const merged = { ...(projectMetadata[rel] ?? {}), ...data }
+      for (const reason of validateKnowledgeNote(merged)) issues.push({ file: rel, reason })
       if (projectMetadata[rel])
         files.set(rel, Buffer.from("---\n" + stringify(merged) + "---\n" + body))
       if (/^Projects\//i.test(rel))
@@ -179,7 +181,7 @@ export async function sync({
       let body = data.toString("utf8")
       const parsed = frontmatter(body)
       const allowed = new Set(
-        "project_id title type visibility status category featured featured_order description genre role platform technologies cover screenshots videos links engine engine-version project-type studio event duration style tags summary order itch-url itch-io official-url aliases".split(
+        "project_id title type visibility status category featured featured_order description genre role platform technologies cover screenshots videos links engine engine-version project-type studio event duration style tags summary order itch-url itch-io official-url aliases distribution".split(
           " ",
         ),
       )
@@ -249,7 +251,10 @@ export async function sync({
           },
         )
       body = body.replace(/!?\[\[([^\]\r\n]+)\]\]/g, (whole, inner) => {
-        const target = inner.split("|")[0],
+        // Obsidian table aliases use \|: the backslash escapes the table delimiter,
+        // not part of the note path. Remaining label pipes must stay table-escaped.
+        const separator = /\\?\|/.exec(inner)
+        const target = separator ? inner.slice(0, separator.index) : inner,
           found = resolve(target, rel, available)
         if (!found) {
           issues.push({
@@ -261,10 +266,13 @@ export async function sync({
         }
         const fragment = target.includes("#") ? "#" + target.split("#").slice(1).join("#") : ""
         const relative = path.posix.relative(path.posix.dirname(rel), found)
-        const label = (inner.split("|")[1] || path.posix.basename(found, ".md")).replace(
-          /[\[\]\\]/g,
-          "",
-        )
+        const label =
+          (separator
+            ? inner.slice(separator.index + separator[0].length)
+            : path.posix.basename(found, ".md")
+          )
+            .replace(/[\[\]\\]/g, "")
+            .replaceAll("|", "\\|") || path.posix.basename(found, ".md")
         return `${whole.startsWith("!") ? "!" : ""}[${label}](${relative.split("/").map(encodeURIComponent).join("/")}${encodeURI(fragment)})`
       })
       let unsafe = false
@@ -277,6 +285,21 @@ export async function sync({
           issues.push({ file: rel, reason: "Raw HTML requires review" })
         }
         if (["link", "image", "definition"].includes(node.type)) {
+          // Normalize only an explicit LinkedIn profile URL; never treat arbitrary missing notes as URLs.
+          if (node.type === "link" && /^www\.linkedin\.com\/in\/[\w-]+\/?$/i.test(node.url)) {
+            const start = metadata.length + node.position.start.offset,
+              end = metadata.length + node.position.end.offset,
+              original = body.slice(start, end),
+              at = original.lastIndexOf(node.url)
+            if (at < 0) unsafe = true
+            else
+              edits.push({
+                start: start + at,
+                end: start + at + node.url.length,
+                value: "https://" + node.url.replace(/\/?$/, "/"),
+              })
+            return
+          }
           if (/^(https?:|mailto:)/i.test(node.url)) return
           const found = resolve(node.url, rel, available)
           if (!found) {

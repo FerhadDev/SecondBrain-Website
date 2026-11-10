@@ -29,7 +29,7 @@ jobs:
       - run: npm ci
       - run: npm run install-plugins
       - name: Privacy and project tests (isolated repository fixtures)
-        run: node --test scripts/sync-obsidian.test.mjs scripts/projects-system.test.mjs scripts/validate-public-content.test.mjs scripts/brain-workflow.test.mjs
+        run: node --test scripts/sync-obsidian.test.mjs scripts/projects-system.test.mjs scripts/validate-public-content.test.mjs scripts/brain-workflow.test.mjs scripts/public-knowledge.test.mjs
       - name: Build committed public snapshot (no vault synchronization)
         run: npm run build:pages
       - name: Validate output

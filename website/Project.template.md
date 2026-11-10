@@ -4,6 +4,7 @@ type: project
 visibility: public
 # Optional fields: remove any that you cannot confirm.
 # status: prototype
+# distribution: download # or browser; omit when not confirmed
 # category: Personal
 # featured: true
 # featured_order: 10

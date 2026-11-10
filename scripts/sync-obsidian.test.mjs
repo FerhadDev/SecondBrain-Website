@@ -61,6 +61,46 @@ test('generated Markdown has one final newline without changing source or interi
   assert.equal(await fs.readFile(path.join(destination, 'A.md'), 'utf8'), output)
 })
 
+test('normal and escaped table aliases preserve public links, literal pipes, relative paths and table cells', async () => {
+  const root = await fs.mkdtemp(path.resolve('.obsidian-sync/table-links-'))
+  const source = path.join(root, 'Public'), destination = path.join(root, 'content/brain')
+  const put = async (name, body) => { const file = path.join(source, name); await fs.mkdir(path.dirname(file), { recursive: true }); await fs.writeFile(file, body) }
+  const original = [
+    '---', 'title: Skills', 'visibility: public', '---',
+    '[[Public/Skills/Unity]] [[Public/Skills/Unity|Unity alias]]',
+    '| Skill | Evidence |', '| --- | --- |',
+    '| [[Public/Skills/Unity\\|Unity and C#]] | [[Public/Projects/Game\\|Game]] |',
+    '| [[Public/Skills/Unity\\|Unity \\| C#]] | [[Projects/Game\\|Game alias]] |',
+    '| [[Public/Skills/Unity#Usage\\|Section]] | [[Skills/Unity]] |',
+    '| [[Missing\\|MISSING_ALIAS]] | [[Private/Secret\\|PRIVATE_ALIAS]] |',
+  ].join('\n') + '\n'
+  await put('Skills.md', original)
+  await put('Skills/Unity.md', '---\ntitle: Unity\ntype: skill\nvisibility: public\n---\n## Usage\n[[../Projects/Game\\|Relative game]]\n')
+  await put('Projects/Game.md', '---\ntitle: Game\ntype: project\nvisibility: public\n---\n[[../Skills/Unity|Unity]]\n')
+  await put('Private/Secret.md', 'PRIVATE CANARY')
+  await put('hidden.md', '---\nvisibility: private\n---\nEXCLUDED CANARY')
+  await put('Legacy.md', '[[Projects]] [[Missing#Architecture and behavior]] [[Missing#Player feedback]] [[hidden\\|EXCLUDED_ALIAS]]')
+  const options = { source, destination, reportPath: path.join(root, 'report.json') }
+  const report = await sync(options)
+  const output = await fs.readFile(path.join(destination, 'Skills.md'), 'utf8')
+  assert(output.includes('[Unity](brain/Skills/Unity.md)'))
+  assert(output.includes('[Unity alias](brain/Skills/Unity.md)'))
+  assert(output.includes('[Unity and C#](brain/Skills/Unity.md)'))
+  assert(output.includes('[Unity \\| C#](brain/Skills/Unity.md)'))
+  assert(output.includes('[Section](brain/Skills/Unity.md#Usage)'))
+  assert(output.includes('[Game alias](brain/Projects/Game.md)'))
+  assert.equal(output.split('\n').filter(l => l.startsWith('|')).map(l => (l.match(/(?<!\\)\|/g) || []).length).join(','), original.split('\n').filter(l => l.startsWith('|')).map(l => (l.match(/(?<!\\)\|/g) || []).length).join(','))
+  assert(!/MISSING_ALIAS|PRIVATE_ALIAS|Private|CANARY/.test(output))
+  assert.equal(report.issues.filter(i => i.file === 'Skills.md').length, 2)
+  const legacy = await fs.readFile(path.join(destination, 'Legacy.md'), 'utf8')
+  assert.equal((legacy.match(/Unavailable public reference/g) || []).length, 4)
+  assert(!/EXCLUDED_ALIAS|Architecture|Player feedback/.test(legacy))
+  assert((await fs.readFile(path.join(destination, 'Skills/Unity.md'), 'utf8')).includes('[Relative game](brain/Projects/Game.md)'))
+  assert.equal(await fs.readFile(path.join(source, 'Skills.md'), 'utf8'), original)
+  assert.deepEqual(await sync(options), report)
+  assert.equal(await fs.readFile(path.join(destination, 'Skills.md'), 'utf8'), output)
+})
+
 test('source symbolic links are excluded', async t => {
   const root = await fs.mkdtemp(path.resolve('.obsidian-sync/link-fixture-'))
   const source = path.join(root, 'Public')
