@@ -127,13 +127,13 @@ try {
   )
   assert.equal(
     await evaluate(
-      "document.querySelector('.portfolio-footer a[href=\"https://www.linkedin.com/in/ferhadzamanov/\"]')?.target",
+      "document.querySelector('#contact a[href=\"https://www.linkedin.com/in/ferhadzamanov/\"]')?.target",
     ),
     "_blank",
   )
   assert(
     await evaluate(
-      "document.querySelector('.portfolio-footer a[href*=\"linkedin.com\"]').rel.includes('noopener')",
+      "document.querySelector('#contact a[href*=\"linkedin.com\"]').rel.includes('noopener')",
     ),
   )
   for (const width of [1440, 390, 320]) {

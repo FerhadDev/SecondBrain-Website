@@ -8,17 +8,6 @@ import { itchActionLabel, profileLinks } from "./profile-links"
 
 const plain = (node: any): string =>
   node?.type === "text" ? node.value : (node?.children ?? []).map(plain).join("")
-function section(file: any, pattern: RegExp) {
-  const nodes = file?.htmlAst?.children ?? []
-  const start = nodes.findIndex((n: any) => /^h[23]$/.test(n.tagName) && pattern.test(plain(n)))
-  if (start < 0) return ""
-  const parts = []
-  for (let i = start + 1; i < nodes.length && !/^h[123]$/.test(nodes[i].tagName); i++)
-    parts.push(plain(nodes[i]))
-  // Cards use the opening paragraph rather than the complete development log.
-  const firstParagraph = nodes.slice(start + 1).find((n: any) => n.tagName === "p")
-  return firstParagraph ? plain(firstParagraph).trim() : parts.join(" ").trim()
-}
 function skills(file: any) {
   const nodes = file?.htmlAst?.children ?? []
   const start = nodes.findIndex((n: any) => n.tagName === "h2" && /Technical Skills/.test(plain(n)))
@@ -58,18 +47,28 @@ export const PortfolioFrame: PageFrame = {
     const project =
       /\/projects\//i.test(p.fileData.slug ?? "") && !p.fileData.slug?.endsWith("/index")
     const about = p.allFiles.find((f) => /brain\/about-me$/i.test(f.slug ?? ""))
+    const publicNotes = (type: "skill" | "achievement") => p.allFiles
+      .filter((file) => file.slug?.startsWith("brain/") && !file.slug.endsWith("/index") &&
+        file.frontmatter?.visibility === "public" && file.frontmatter.type === type &&
+        file.frontmatter.publish !== false && !file.frontmatter.encrypted && !file.unlisted)
+      .sort((a, b) => String(a.frontmatter?.title).localeCompare(String(b.frontmatter?.title), "en"))
     const discoveredProjects = discoverProjects(p.allFiles, p.ctx.allFiles)
-    const projects = discoveredProjects.map((project) =>
-      p.allFiles.find((f) => f.slug === project.slug)!,
-    )
     const title = p.fileData.frontmatter?.title
     const fm = { ...p.fileData.frontmatter, genre: documentedGenre(p.fileData, about) } as Record<
       string,
       any
     >
-    const graphView = (
-      <div class="brain-graph" data-index={`${root}/static/contentIndex.json`}>
-        <div class="graph-controls">
+    const graphNotes = (
+      <ul class="graph-note-list" aria-label="Public notes">
+        {p.allFiles
+          .filter((f) => f.slug?.startsWith("brain/") && !f.slug.endsWith("/index"))
+          .map((f) => (
+            <li><a href={href(f.slug!)}>{f.frontmatter?.title}</a></li>
+          ))}
+      </ul>
+    )
+    const graphControls = (
+      <div class="graph-controls">
           <label>
             Find a note{" "}
             <input type="search" placeholder="Search public notes…" class="graph-search" />
@@ -86,7 +85,14 @@ export const PortfolioFrame: PageFrame = {
           <button class="graph-reset" type="button">
             Reset view
           </button>
-        </div>
+      </div>
+    )
+    const graphView = (
+      <div class="brain-graph" data-index={`${root}/static/contentIndex.json`}>
+        {home ? <details class="graph-preview-filters">
+          <summary>Search and filter</summary>
+          {graphControls}
+        </details> : graphControls}
         <div class="graph-legend">
           {["Projects", "Skills", "Achievements", "Knowledge"].map((x) => (
             <span data-category={x}>{x}</span>
@@ -94,22 +100,17 @@ export const PortfolioFrame: PageFrame = {
         </div>
         <svg viewBox="0 0 1000 500" role="img" aria-label="Interactive public knowledge graph" />
         <p class="graph-hint">Scroll to zoom · drag to pan · select a node to open its note</p>
-        <ul class="graph-note-list" aria-label="Public notes">
-          {p.allFiles
-            .filter((f) => f.slug?.startsWith("brain/") && !f.slug.endsWith("/index"))
-            .map((f) => (
-              <li>
-                <a href={href(f.slug!)}>{f.frontmatter?.title}</a>
-              </li>
-            ))}
-        </ul>
+        {home ? <details class="graph-preview-notes">
+          <summary>Browse public notes</summary>
+          {graphNotes}
+        </details> : graphNotes}
         <noscript>
           Enable JavaScript for the interactive graph. Public note links are available above.
         </noscript>
       </div>
     )
     return (
-      <div class={`portfolio-shell ${theme?.className ?? ""}`}>
+      <div class={`portfolio-shell ${home ? "homepage-shell" : ""} ${theme?.className ?? ""}`}>
         <a class="skip-link" href="#main-content">
           Skip to content
         </a>
@@ -118,16 +119,16 @@ export const PortfolioFrame: PageFrame = {
             fz<span>.</span> <small>Farhad Zamanov</small>
           </a>
           <nav aria-label="Main navigation">
-            <a href={href("index")}>Home</a>
+            {!home && <a href={href("index")}>Home</a>}
             <a href={href("projects")} aria-current={gallery ? "page" : undefined}>
               Projects
             </a>
-            <a href={`${href("index")}#skills`}>Skills</a>
-            <a href={href("graph")}>Knowledge Graph</a>
+            {!home && <a href={`${href("index")}#skills`}>Skills</a>}
             {about && <a href={href(about.slug!)}>About</a>}
-            <a href="https://github.com/FerhadDev" target="_blank" rel="noopener noreferrer">
+            <a href={href("graph")}>{home ? "Graph" : "Knowledge Graph"}</a>
+            {!home && <a href="https://github.com/FerhadDev" target="_blank" rel="noopener noreferrer">
               GitHub ↗
-            </a>
+            </a>}
           </nav>
           <div class="portfolio-search">
             {header.map((C) => (
@@ -156,34 +157,30 @@ export const PortfolioFrame: PageFrame = {
             ) : home ? (
               <>
                 <section class="hero">
-                  <div class="eyebrow">GAMEPLAY PROGRAMMING / GAME MECHANICS</div>
+                  <div class="eyebrow">Farhad Zamanov</div>
                   <h1>
-                    Ideas into systems.
-                    <br />
-                    Systems into <span>play.</span>
+                    I build interactive worlds through <span>code and design.</span>
                   </h1>
                   <p class="hero-role">
-                    Farhad Zamanov <span>— Game Developer &amp; Game Designer</span>
+                    Game Developer &amp; Game Designer
                   </p>
                   <p class="hero-intro">
                     I design gameplay experiences, develop interactive systems, and turn creative
                     ideas into playable games. My primary tools are Unity and C#.
                   </p>
                   <div class="hero-actions">
-                    <a class="button primary" href="#projects">
-                      Explore Projects <span>↗</span>
+                    <a class="button primary" href={href("projects")}>
+                      Explore Projects <span aria-hidden="true">↗</span>
                     </a>
-                    <a class="button" href={href("graph")}>
-                      Explore My Brain <span>→</span>
-                    </a>
-                    <a class="text-link" href="https://github.com/FerhadDev">
-                      GitHub ↗
-                    </a>
+                    {about && <a class="button" href={href(about.slug!)}>
+                      About Me <span aria-hidden="true">→</span>
+                    </a>}
                   </div>
-                  <div class="hero-bottom">
-                    <span>CODE + DESIGN + CURIOSITY</span>
-                    <span>SCROLL TO EXPLORE ↓</span>
-                  </div>
+                  <ul class="hero-skills" aria-label="Technical skills">
+                    {skills(about).flatMap((group) => group.items).slice(0, 4).map((skill) => (
+                      <li>{skill}</li>
+                    ))}
+                  </ul>
                 </section>
                 <section id="projects">
                   <div class="section-heading">
@@ -194,53 +191,38 @@ export const PortfolioFrame: PageFrame = {
                     <p>Game jams, experiments, and the systems behind them.</p>
                   </div>
                   <div class="project-grid">
-                    {projects.map((f, i) => {
-                      const meta = f.frontmatter as Record<string, any>
-                      const overview = section(f, /^(Project overview|Overview)$/i)
-                      const discovered = discoverProjects([f], p.ctx.allFiles)[0]
+                    {discoveredProjects.map((discovered, i) => {
                       const cover = discovered.cover ? href(discovered.cover) : ""
-                      const technologies = discovered.technologies
                       const play = discovered.itch
+                      const genre = discovered.genre || documentedGenre(
+                        p.allFiles.find((file) => file.slug === discovered.slug)!, about,
+                      )
+                      const description = discovered.description.length > 160
+                        ? discovered.description.slice(0, 157).replace(/\s+\S*$/, "") + "…"
+                        : discovered.description
                       return (
-                        <article class="project-card">
-                          <a
-                            class={`project-cover cover-${i % 2}`}
-                            href={href(f.slug!)}
-                            aria-label={`View ${meta.title}`}
-                          >
-                            <span>PROJECT / {String(i + 1).padStart(2, "0")}</span>
-                            <strong>{meta.title}</strong>
+                        <article class="project-card" key={discovered.slug}>
+                          <div class={`project-cover cover-${i % 2}`}>
                             {cover ? (
-                              <img src={cover} alt={`${meta.title} screenshot`} loading="lazy" />
+                              <img src={cover} alt={`${discovered.title} cover`} loading="lazy" decoding="async" />
                             ) : (
-                              <small>No public cover image supplied</small>
+                              <div class="project-cover-fallback">
+                                <span aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+                                <small>No public cover supplied</small>
+                              </div>
                             )}
-                          </a>
+                          </div>
                           <div class="project-card-body">
-                            <div class="eyebrow">
-                              {discovered.category === "Team"
-                                ? "Team Project"
-                                : discovered.category}{" "}
-                              / {discovered.genre || documentedGenre(f, about) || "Project"} ·{" "}
-                              {meta.platform ?? ""}
-                            </div>
+                            {genre && <p class="project-card-genre">{genre}</p>}
                             <h3>
-                              <a href={href(f.slug!)}>{meta.title}</a>
+                              <a class="project-card-link" href={href(discovered.slug)}>{discovered.title}</a>
                             </h3>
-                            <p>{discovered.description || overview}</p>
-                            <div class="chips">
-                              {[
-                                ...technologies,
-                                ...(discovered.status
-                                  ? [discovered.status.replace(/^./, (c) => c.toUpperCase())]
-                                  : []),
-                                ...(Array.isArray(meta.style) ? meta.style : []),
-                              ].map((t) => (
-                                <span>{t}</span>
-                              ))}
+                            {description && <p class="project-card-description">{description}</p>}
+                            <div class="chips" aria-label="Technologies">
+                              {discovered.technologies.map((t) => <span key={t}>{t}</span>)}
                             </div>
                             <div class="card-links">
-                              <a href={href(f.slug!)}>Project details →</a>
+                              <span aria-hidden="true">View project ↗</span>
                               {play && (
                                 <a href={play} target="_blank" rel="noopener noreferrer">
                                   {itchActionLabel(discovered.distribution)} ↗
@@ -256,43 +238,65 @@ export const PortfolioFrame: PageFrame = {
                 <a class="button showcase-view-all" href={href("projects")}>
                   View all projects ↗
                 </a>
-                <section id="skills">
+                <section id="brain" class="graph-preview" aria-labelledby="knowledge-preview-heading">
                   <div class="section-heading">
                     <div>
-                      <div class="eyebrow">02 / TOOLKIT</div>
-                      <h2>The tools behind the play.</h2>
+                      <div class="eyebrow">02 / CONNECTED THINKING</div>
+                      <h2 id="knowledge-preview-heading">Explore My Knowledge</h2>
                     </div>
-                    <p>Skills documented in my public developer profile.</p>
+                    <a class="button" href={href("graph")}>
+                      View Full Graph <span aria-hidden="true">↗</span>
+                    </a>
                   </div>
-                  <div class="skills-grid">
-                    {skills(about).map((group, i) => (
-                      <div class="skill-card">
-                        <span class="eyebrow">0{i + 1}</span>
-                        <h3>{group.title}</h3>
-                        <ul>
-                          {group.items.map((item) => (
-                            <li>{item}</li>
-                          ))}
-                        </ul>
-                      </div>
+                  <p>Explore the connections between my public projects, skills, and achievements.</p>
+                  {graphView}
+                </section>
+                <section id="skills" class="home-knowledge-section" aria-labelledby="home-skills-heading">
+                  <div class="section-heading">
+                    <div>
+                      <div class="eyebrow">03 / TOOLKIT</div>
+                      <h2 id="home-skills-heading">Skills</h2>
+                    </div>
+                    <p>Explore the skills behind my projects.</p>
+                  </div>
+                  <ul class="home-skill-links">
+                    {publicNotes("skill").map((file) => (
+                      <li key={file.slug}><a href={href(file.slug!)}>{file.frontmatter?.title}</a></li>
+                    ))}
+                  </ul>
+                </section>
+                <section id="achievements" class="home-knowledge-section" aria-labelledby="home-achievements-heading">
+                  <div class="section-heading">
+                    <div>
+                      <div class="eyebrow">04 / MILESTONES</div>
+                      <h2 id="home-achievements-heading">Achievements</h2>
+                    </div>
+                    <p>Competition results and project showcases.</p>
+                  </div>
+                  <div class="home-achievement-grid">
+                    {publicNotes("achievement").slice(0, 3).map((file) => (
+                      <article class="home-achievement-card" key={file.slug}>
+                        <h3><a href={href(file.slug!)}>{file.frontmatter?.title}</a></h3>
+                        <span aria-hidden="true">View achievement ↗</span>
+                      </article>
                     ))}
                   </div>
                 </section>
-                <section id="brain">
+                <section id="contact" class="home-knowledge-section" aria-labelledby="home-contact-heading">
                   <div class="section-heading">
                     <div>
-                      <div class="eyebrow">03 / CONNECTED THINKING</div>
-                      <h2>A look inside my Second Brain.</h2>
+                      <div class="eyebrow">05 / CONNECT</div>
+                      <h2 id="home-contact-heading">Connect With Me</h2>
                     </div>
-                    <a class="button" href={href("graph")}>
-                      Open full graph ↗
-                    </a>
+                    <p>Find my work and get in touch.</p>
                   </div>
-                  <p>
-                    A living collection of public projects and knowledge. Every connection comes
-                    from a real note.
-                  </p>
-                  {graphView}
+                  <div class="hero-actions home-contact-links">
+                    {profileLinks(about).map((link) => (
+                      <a class="button" key={link.label} href={link.href} target="_blank" rel="noopener noreferrer">
+                        {link.label} <span aria-hidden="true">↗</span>
+                      </a>
+                    ))}
+                  </div>
                 </section>
               </>
             ) : gallery ? (
@@ -375,8 +379,8 @@ export const PortfolioFrame: PageFrame = {
             <p>Gameplay, systems, and everything I learn along the way.</p>
           </div>
           <div>
-            <span class="eyebrow">Connect With Me</span>
-            {profileLinks(about).map((link) => (
+            {!home && <span class="eyebrow">Connect With Me</span>}
+            {!home && profileLinks(about).map((link) => (
               <a href={link.href} target="_blank" rel="noopener noreferrer">
                 {link.label} ↗
               </a>

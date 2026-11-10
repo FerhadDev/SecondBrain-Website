@@ -22,11 +22,16 @@ assert.equal(
   (await read("projects.html")).match(/data-gallery-card/g)?.length ?? 0,
   "Homepage matches the discovered gallery",
 )
-assert.equal(
-  elements.filter((n) => hasClass(n, "skill-card")).length,
-  4,
-  "Four documented skill groups",
-)
+const publicKind = (kind) => Object.entries(index).filter(([slug, note]) =>
+  slug.startsWith("brain/") && !slug.endsWith("/index") && note.tags?.includes(kind))
+const skillLinks = []
+visit(elements.find((n) => hasClass(n, "home-skill-links")), "element", (node) => {
+  if (node.tagName === "a") skillLinks.push(new URL(node.properties.href, "https://portfolio.invalid/").pathname.slice(1))
+})
+assert.deepEqual(skillLinks.sort(), publicKind("skill").map(([slug]) => slug).sort(), "Skills link to real public notes")
+assert.equal(elements.filter((n) => hasClass(n, "home-achievement-card")).length,
+  Math.min(3, publicKind("achievement").length), "Only real public achievements")
+assert(elements.some((n) => n.properties?.id === "contact"), "Homepage contact section")
 assert.equal(elements.filter((n) => n.tagName === "h1").length, 1, "One homepage heading")
 assert(
   elements.some((n) => hasClass(n, "search-button")),
@@ -106,5 +111,5 @@ async function walk(dir) {
 }
 await walk(outputRoot)
 console.log(
-  `Portfolio validation passed: dynamic projects, 4 skill groups, ${notes.length} public notes, native graph, search markup, and ${checked} generated local links.`,
+  `Portfolio validation passed: dynamic projects, public skill links/achievements/contact, ${notes.length} public notes, native graph, search markup, and ${checked} generated local links.`,
 )
