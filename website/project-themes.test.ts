@@ -5,6 +5,7 @@ import type { QuartzPluginData } from "../quartz/plugins/vfile"
 import { projectTheme } from "./project-themes"
 import { approvedMedia, type ProjectThemeProps } from "./project-themes/media"
 import { BlueDiary } from "./project-themes/BlueDiary"
+import { LucidSpace } from "./project-themes/LucidSpace"
 
 const note = (extra = {}, slug = "brain/projects/team/blue-diary") =>
   ({ slug, frontmatter: { visibility: "public", ...extra } }) as unknown as QuartzPluginData
@@ -25,7 +26,7 @@ test("theme registry requires the existing public route and never opts private c
     { status: "draft" },
   ])
     assert.equal(projectTheme(note(extra)), undefined)
-  assert.equal(projectTheme(note({}, "brain/projects/game-jam/lucid-space")), undefined)
+  assert.equal(projectTheme(note({}, "brain/projects/game-jam/lucid-space"))?.Component, LucidSpace)
 })
 test("theme reads only existing approved public assets and sanitized note images", () => {
   const file = note({

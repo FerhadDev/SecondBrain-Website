@@ -3,9 +3,11 @@ import type { ProjectThemeProps } from "./media"
 import { BlueDiary } from "./BlueDiary"
 import { KingsCourt } from "./KingsCourt"
 import { Tengri } from "./Tengri"
+import { LucidSpace } from "./LucidSpace"
 
 // A presentation registry only: it cannot create pages or override sync/publication rules.
 const themes: Record<string, { className: string; Component: ComponentType<ProjectThemeProps> }> = {
+  "brain/projects/game-jam/lucid-space": { className: "lucid-space-shell", Component: LucidSpace },
   "brain/projects/game-jam/tengri": { className: "tengri-shell", Component: Tengri },
   "brain/projects/game-jam/are-you-king-enough": {
     className: "kings-court-shell",
@@ -28,6 +30,7 @@ export function projectTheme(file: ProjectThemeProps["fileData"]) {
   )
     return undefined
   const ids: Record<string, string> = {
+    "lucid-space": "brain/projects/game-jam/lucid-space",
     tengri: "brain/projects/game-jam/tengri",
     "blue-diary": "brain/projects/team/blue-diary",
     "are-you-king-enough": "brain/projects/game-jam/are-you-king-enough",

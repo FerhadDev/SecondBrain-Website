@@ -1,4 +1,11 @@
 {
+  "Projects/Game-Jam/Lucid Space.md": {
+    "project_id": "lucid-space",
+    "title": "Lucid Space",
+    "type": "project",
+    "visibility": "public",
+    "cover": "Projects/Game-Jam/Attachments/Pasted image 20261115112549.png"
+  },
   "Projects/Game-Jam/Tengri.md": {
     "title": "Tengri",
     "type": "project",

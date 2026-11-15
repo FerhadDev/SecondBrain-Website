@@ -48,8 +48,8 @@ for (const slug of [
     assert(html.includes('class="kings-court"'))
     assert(html.includes('id="court-work"'))
   } else {
-    assert(html.includes('class="project-metadata"'))
-    assert(html.includes('class="article-navigation"'))
+    assert(html.includes('class="lucid-space"'))
+    assert(html.includes('id="lucid-my-contributions"'))
   }
   assert(!html.includes('class="note-properties"'))
 }
