@@ -82,6 +82,23 @@
 .lucid-credits summary { color: #79e2e8; cursor: pointer; }
 .lucid-credits h2 { margin-top: 24px; font-size: 20px; }
 .lucid-footer { padding-top: 24px; border-top: 1px solid #284751; }
+.lucid-space .lucid-design-status {
+  padding: 12px 16px;
+  border-left: 2px solid #ffad71;
+  background: #14232c;
+  color: #f1c7a7;
+  font-size: 13px;
+}
+.lucid-design-topics { display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 13px; }
+.lucid-design figure { border: 1px solid #284751; margin-top: 24px; }
+.lucid-board-preview { display: block; background: #050b11; }
+.lucid-space .lucid-design img { image-rendering: auto; }
+.lucid-board-viewer { padding: 16px; border-top: 1px solid #284751; }
+.lucid-board-viewer summary { cursor: pointer; color: #79e2e8; font-size: 13px; }
+.lucid-board-scroll { max-height: 65vh; max-width: 100%; overflow: auto; margin: 16px 0; background: #050b11; }
+.lucid-space .lucid-board-scroll img { width: auto; max-width: none; height: auto; }
+.lucid-board-scroll:focus-visible { outline: 2px solid #ffad71; outline-offset: 3px; }
+.lucid-board-viewer > a { font-size: 13px; }
 @media (max-width: 850px) {
   .lucid-hero { grid-template-columns: 1fr; gap: 24px; padding: 40px 0; }
   .lucid-space-shell {

@@ -4,6 +4,7 @@ import render from "preact-render-to-string"
 import { LucidSpace } from "./project-themes/LucidSpace"
 import { projectTheme } from "./project-themes"
 import type { ProjectThemeProps } from "./project-themes/media"
+import type { FilePath } from "../quartz/util/path"
 
 const assets = ["title.png", "ship1.png", "ship2.png", "ship3.png", "trailer.mp4"]
   .map((file) => `brain/Projects/Game-Jam/Attachments/${file}`)
@@ -57,4 +58,28 @@ test("missing media stays absent; theme cannot opt private notes in and follows 
   for (const flag of [{ visibility: "private" }, { draft: true }, { publish: false }, { encrypted: true }])
     assert.equal(projectTheme({ ...p.fileData, frontmatter: { ...p.fileData.frontmatter, ...flag } } as any), undefined)
   assert.equal(projectTheme({ ...p.fileData, slug: "brain/projects/renamed", frontmatter: { ...p.fileData.frontmatter, project_id: "lucid-space" } } as any)?.Component, LucidSpace)
+})
+
+test("design board is a planning reference with a full-size viewer, separate from gameplay screenshots", () => {
+  const p = props()
+  const board = "brain/Projects/Game-Jam/Attachments/design.png"
+  p.ctx.allFiles.push(("content/" + board) as FilePath)
+  p.fileData.htmlAst!.children.push(
+    element("h2", "Game Design & Development") as any,
+    element("p", "Early planning concepts; not all features are implemented.") as any,
+    { type: "element", tagName: "img", properties: { src: "../../../" + board.toLowerCase() }, children: [] },
+  )
+  const html = render(LucidSpace(p))
+  assert(html.includes("Game Design &amp; Development"))
+  assert(html.includes("Planned concepts — implementation is not confirmed"))
+  assert(html.includes("Early planning concepts"))
+  assert(html.includes('id="lucid-game-design-and-development"'))
+  assert(html.includes("View full-resolution board"))
+  assert(html.includes('role="region"') && html.includes('tabindex="0"'))
+  const gallery = html.split('class="lucid-gallery"')[1].split("</section>")[0]
+  assert.equal((gallery.match(/<img\b/g) ?? []).length, 3)
+  assert(!gallery.includes("design.png"))
+  assert.equal((html.match(/<video\b/g) ?? []).length, 1)
+  p.ctx.allFiles = p.ctx.allFiles.filter((f) => !f.endsWith("design.png"))
+  assert(!render(LucidSpace(p)).includes('id="lucid-game-design-and-development"'))
 })

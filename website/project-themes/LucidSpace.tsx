@@ -19,10 +19,8 @@ export function LucidSpace(props: ProjectThemeProps) {
   const conflictingStudio = creditStudio && fm.studio && creditStudio.toLowerCase() !== String(fm.studio).toLowerCase()
   const project = discoverProjects([fileData], props.ctx.allFiles)[0]
   const known = (text: string) => !/to be (?:confirmed|documented)/i.test(text)
-  const sections = ["Overview", "Gameplay", ...(abilities.length ? ["Music-disc abilities"] : []),
-    ...(media.videos.length ? ["Gameplay video"] : []), "My contributions", "Technologies"]
   // Keep public credits and note relationships as sanitized HTML, including their links.
-  const sourceSection = (heading: string) => {
+  const sectionNodes = (heading: string) => {
     const nodes: RootContent[] = []
     let found = false
     for (const node of fileData.htmlAst?.children ?? []) {
@@ -31,8 +29,19 @@ export function LucidSpace(props: ProjectThemeProps) {
         found = nodeText(node) === heading
       } else if (found) nodes.push(node)
     }
-    return htmlToJsx(fileData.filePath!, { type: "root", children: nodes } as Root)
+    return nodes
   }
+  const sourceSection = (heading: string) => htmlToJsx(fileData.filePath!, {
+    type: "root", children: sectionNodes(heading),
+  } as Root)
+  const design = documentedSection(fileData, /^Game Design & Development$/i)
+  const boards = approvedMedia({ ...props, fileData: { ...fileData,
+    frontmatter: { title: String(fm.title), visibility: "public" },
+    htmlAst: { type: "root", children: sectionNodes("Game Design & Development") },
+  } }).images
+  const sections = ["Overview", "Gameplay", ...(abilities.length ? ["Music-disc abilities"] : []),
+    ...(boards.length ? ["Game Design & Development"] : []),
+    ...(media.videos.length ? ["Gameplay video"] : []), "My contributions", "Technologies"]
   return (
     <article class="lucid-space" aria-labelledby="lucid-space">
       <div class="lucid-topline">
@@ -74,7 +83,7 @@ export function LucidSpace(props: ProjectThemeProps) {
         <ul>{gameplay.items.filter(known).map((text) => <li key={text}>{text}</li>)}</ul>
         {gameplay.paragraphs.filter((p) => !abilities.includes(p) && !/^Source:/i.test(p)).map((text) => <p key={text}>{text}</p>)}
         <div class="lucid-gallery">
-          {media.images.filter((src) => src !== cover).map((src, i) => <figure key={src}>
+          {media.images.filter((src) => src !== cover && !boards.includes(src)).map((src, i) => <figure key={src}>
             <a href={src} target="_blank" rel="noopener noreferrer" aria-label={`Open Lucid Space gameplay screenshot ${i + 1} at full size`}>
               <img src={src} alt={`Lucid Space spaceship gameplay screenshot ${i + 1}`} loading="lazy" decoding="async" />
             </a>
@@ -87,6 +96,30 @@ export function LucidSpace(props: ProjectThemeProps) {
         <h2>Music-disc abilities</h2>
         {abilities.map((text) => <p key={text}>{text}</p>)}
         <p class="lucid-source">Only the documented ability system is described here; individual disc effects are not specified in the public note.</p>
+      </section>}
+      {boards.length > 0 && <section id="lucid-game-design-and-development" class="lucid-panel lucid-design" aria-labelledby="lucid-design-title">
+        <p class="lucid-kicker">DESIGN / PLANNING ARCHIVE</p>
+        <h2 id="lucid-design-title">Game Design &amp; Development</h2>
+        <p class="lucid-design-status">Planned concepts — implementation is not confirmed by this board.</p>
+        {design.paragraphs.map((text) => <p key={text}>{text}</p>)}
+        <ul class="lucid-design-topics" aria-label="Concepts documented on the design board">
+          {["Core gameplay loop", "Movement, interaction & collection", "Music-disc concepts",
+            "Music-player systems", "Puzzle & mini-game ideas", "Spaceship level planning"].map((topic) => <li key={topic}>{topic}</li>)}
+        </ul>
+        {boards.map((src) => <figure key={src}>
+          <a class="lucid-board-preview" href={src} target="_blank" rel="noopener noreferrer" aria-label="Open original Lucid Space design board">
+            <img src={src} alt="Original Lucid Space planning board: game loop, mechanics, music systems, mini-game ideas and spaceship level plan" loading="lazy" decoding="async" />
+          </a>
+          <figcaption>Original mini game-design board / Planning reference, not a feature checklist</figcaption>
+          <details class="lucid-board-viewer">
+            <summary>View full-resolution board</summary>
+            <p class="lucid-source">Scroll horizontally and vertically to read the original image. Keyboard users can focus the viewer and use arrow keys.</p>
+            <div class="lucid-board-scroll" tabIndex={0} role="region" aria-label="Full-resolution Lucid Space design board; scroll to explore">
+              <img src={src} alt="Full-resolution Lucid Space game-design board" loading="lazy" decoding="async" />
+            </div>
+            <a href={src} target="_blank" rel="noopener noreferrer">Open original image in a new tab ↗</a>
+          </details>
+        </figure>)}
       </section>}
       {media.videos.length > 0 && <section id="lucid-gameplay-video" class="lucid-panel" aria-labelledby="lucid-video-title">
         <p class="lucid-kicker">04 / FLIGHT RECORDING</p>
@@ -122,4 +155,4 @@ export function LucidSpace(props: ProjectThemeProps) {
   )
 }
 
-const sectionId = (title: string) => title.toLowerCase().replace(/\s+/g, "-")
+const sectionId = (title: string) => title.toLowerCase().replace(/&/g, "and").replace(/\s+/g, "-")

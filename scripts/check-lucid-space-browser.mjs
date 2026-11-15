@@ -15,7 +15,9 @@ await withLocalBrowser("public", async ({ origin, send, evaluate, until, delay }
   assert(await evaluate("document.querySelector('#lucid-my-contributions').textContent.includes('Role: Game Developer')"))
   assert(await evaluate("document.querySelector('#lucid-my-contributions').textContent.includes('have not yet been documented')"))
   assert.equal(await evaluate("document.querySelector('.lucid-credits').textContent.includes('Studio attribution needs owner confirmation')"), false)
-  assert.equal(await evaluate("document.querySelectorAll('.lucid-space img').length"), 4)
+  assert.equal(await evaluate("document.querySelectorAll('.lucid-title-art img,.lucid-gallery img').length"), 4)
+  assert.equal(await evaluate("document.querySelectorAll('.lucid-design figure').length"), 1)
+  assert(await evaluate("document.querySelector('.lucid-design-status').textContent.includes('implementation is not confirmed')"))
   assert.equal(await evaluate("document.querySelectorAll('.lucid-space video').length"), 1)
   assert(await evaluate("document.querySelector('#lucid-music-disc-abilities').textContent.includes('music discs')"))
   await evaluate("Promise.all(Array.from(document.querySelectorAll('.lucid-space img')).map(i=>{i.loading='eager';return i.decode()}))")
@@ -27,14 +29,32 @@ await withLocalBrowser("public", async ({ origin, send, evaluate, until, delay }
     await send("Emulation.setDeviceMetricsOverride", { width, height: 950, deviceScaleFactor: 1, mobile: false })
     await delay(100)
     assert.equal(await evaluate("document.documentElement.scrollWidth>innerWidth"), false, "Overflow at " + width)
-    assert(await evaluate(`Array.from(document.querySelectorAll('.lucid-space img')).every(i=>{
-      const r=i.getBoundingClientRect();return i.naturalWidth>0&&Math.abs(r.width/r.height-i.naturalWidth/i.naturalHeight)<.03
-    })`), "Uncropped screenshots at " + width)
+    assert(await evaluate(`(async()=>{for(const i of document.querySelectorAll('.lucid-space img')){
+      if(i.closest('details:not([open])'))continue;
+      i.scrollIntoView({behavior:'instant'});
+      await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+      const rect=i.getBoundingClientRect();
+      if(!i.naturalWidth||Math.abs(rect.width/rect.height-i.naturalWidth/i.naturalHeight)>=.03)return false;
+    }return true})()`), "Uncropped screenshots at " + width)
     await evaluate("window.scrollTo({top:0,behavior:'instant'})")
     const screenshot = await send("Page.captureScreenshot", { format: "png" })
     await fs.mkdir(".quartz/lucid-preview", { recursive: true })
     await fs.writeFile(`.quartz/lucid-preview/${width}.png`, Buffer.from(screenshot.data, "base64"))
   }
+  await evaluate("document.querySelector('.lucid-board-viewer summary').click()")
+  await until("document.querySelector('.lucid-board-scroll img').naturalWidth>0")
+  await evaluate("document.querySelector('.lucid-board-scroll img').scrollIntoView({behavior:'instant'})")
+  await delay(100)
+  assert(await evaluate(`(()=>{const i=document.querySelector('.lucid-board-scroll img'),r=i.getBoundingClientRect();return r.width===i.naturalWidth&&r.height===i.naturalHeight})()`), "Original resolution without distortion")
+  assert(await evaluate("document.querySelector('.lucid-board-scroll').scrollWidth>document.querySelector('.lucid-board-scroll').clientWidth"), "Readable scrollable original")
+  const original = await evaluate("document.querySelector('.lucid-board-viewer > a').href")
+  const boardResponse = await fetch(original)
+  assert.equal(boardResponse.status, 200)
+  assert(boardResponse.headers.get("content-type").startsWith("image/png"))
+  await evaluate("document.querySelector('.lucid-board-scroll').scrollLeft=100")
+  assert((await evaluate("document.querySelector('.lucid-board-scroll').scrollLeft"))>0)
+  assert.equal(await evaluate("document.documentElement.scrollWidth>innerWidth"), false)
+  await evaluate("document.querySelector('.lucid-board-viewer summary').click()")
   for (const href of await evaluate("Array.from(document.querySelectorAll('.lucid-space a[href^=\"#\"]')).map(a=>a.getAttribute('href').slice(1))"))
     assert(await evaluate(`!!document.getElementById(${JSON.stringify(href)})`), "Section anchor " + href)
   await send("Input.dispatchKeyEvent", { type: "keyDown", key: "Tab", code: "Tab", windowsVirtualKeyCode: 9 })
@@ -55,5 +75,5 @@ await withLocalBrowser("public", async ({ origin, send, evaluate, until, delay }
   await send("Page.navigate", { url: origin + "/" })
   await until("!!document.querySelector('.project-card')")
   assert.equal(await evaluate(`Array.from(document.querySelectorAll('.project-card')).find(c=>c.querySelector('h3')?.textContent==='Lucid Space').querySelector('img').src`), cover)
-  console.log("Passed: Lucid title + three gameplay screenshots, real cover on homepage, no image crop/overflow at 1440/390/320px, section links/focus, native video playback/fullscreen/poster, no browser errors.")
+  console.log("Passed: original design board/planning labels/full-resolution scroll viewer; title + three gameplay screenshots; homepage cover; no crop/overflow at 1440/390/320px; focus/links; video playback/fullscreen/poster; no browser errors.")
 })

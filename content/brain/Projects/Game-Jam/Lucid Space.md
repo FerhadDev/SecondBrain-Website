@@ -88,6 +88,16 @@ design-board description does not confirm implementation of draft features.
 ![350](brain/Projects/Game-Jam/Attachments/Pasted%20image%2020261111152416.png)![346](brain/Projects/Game-Jam/Attachments/Pasted%20image%2020261111152419.png)![350](brain/Projects/Game-Jam/Attachments/Pasted%20image%2020261111152422.png)
 - Gameplay video or trailer:![Lucid Space – Official Trailer A Sci-Fi Survival Experience by HyperArc 1.mp4](brain/Projects/Game-Jam/Attachments/Lucid%20Space%20%E2%80%93%20Official%20Trailer%20A%20Sci-Fi%20Survival%20Experience%20by%20HyperArc%201.mp4)
 
+## Game Design & Development
+This section documents the early design and planning of Lucid Space.
+
+The original design board includes the core game loop, movement and interaction mechanics, music-disc concepts, music-player systems, puzzle ideas, and spaceship level planning.
+
+Some features shown in the design board were concepts developed during planning and should not automatically be considered implemented gameplay features.
+
+### Original Game Design Board
+![Pasted image 20261115141927.png](brain/Projects/Game-Jam/Attachments/Pasted%20image%2020261115141927.png)
+
 ## itch.io link
 
 [Lucid Space — Trojan Horse Studios](https://hyperarcstudios.itch.io/lucid-space)
